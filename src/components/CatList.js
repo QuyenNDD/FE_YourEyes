@@ -1,0 +1,1 @@
+export default function CatList() { return <div>Cat List</div>; }

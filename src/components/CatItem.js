@@ -1,0 +1,1 @@
+export default function CatItem() { return <div>Cat Item</div>; }
