@@ -17,14 +17,26 @@ export default function Home() {
 
   
   return (
-    <div>
-    {Array.isArray(cats) ? (
-      cats.map((cat, index) => <p key={index}>{cat.name}</p>)
-    ) : (
-      <p>{JSON.stringify(cats)}</p> 
-    )}
+    <div className="container mt-4">
+      <div className="row">
+        {Array.isArray(cats) ? (
+          cats.map((cat, index) => (
+            <div key={index} className="col-md-4 mt-2">
+              <div className="card h-200">
+                <img src={cat.image} className="card-img-top" alt={cat.name} />
+                <div className="card-body d-flex flex-column">
+                  <h5 className="card-title">{cat.name}</h5>
+                  <p className="card-text text-truncate">{cat.description}</p>
+                  <a href="#" className="btn btn-primary mt-auto">Xem thêm</a>
+                </div>
+              </div>
+            </div>
+          ))
+        ) : (
+          <p>{JSON.stringify(cats)}</p>
+        )}
+      </div>
+    </div>
 
-
-  </div>
   );
 }

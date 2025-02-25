@@ -13,7 +13,7 @@ const FooterContainer = styled.footer`
 const Footer = () => {
   return (
     <FooterContainer>
-      <p>© 2025 Your Eyes. All Rights Reserved.</p>
+      <p>© 2025 Your Eyes. All Rights Reserved....</p>
     </FooterContainer>
   );
 };

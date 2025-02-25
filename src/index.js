@@ -10,6 +10,8 @@ import createSagaMiddleware from "redux-saga";
 import { configureStore } from "@reduxjs/toolkit";
 import "./assets/css/styles.css";
 import "./assets/scss/styles.scss";
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap/dist/js/bootstrap.bundle.min';
 
 const saga = createSagaMiddleware();
 

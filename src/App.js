@@ -9,7 +9,8 @@ import Admin from "./pages/Admin";
 import Header from "./components/Header";
 import About from './pages/About';
 import Contact from './pages/Contact';
-import Footer from "./pages/Footer";
+import Footer from "./components/Footer";
+
 
 
 function AppContent() {

@@ -107,7 +107,7 @@ const Header = () => {
             </Link>
           </li>
           <li>
-            <button onClick={handleAuth}>
+            <button onClick={handleAuth} className="btn btn-warning">
                   {/* Hiển thị nút tương ứng với trạng thái đăng nhập */}            
                 {isAuthenticated ? "Đăng xuất" : "Đăng nhập"}
               
