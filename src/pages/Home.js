@@ -6,11 +6,8 @@ import { useNavigate } from "react-router-dom";
 export default function Home() { 
   const cats = useSelector((state) => state.cats.cats);
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
-  const [isAuthenticated, setIsAuthenticated] = useState(
-    localStorage.getItem("authenticated") === "true"
-  );
+
 
   useEffect(() => {
     dispatch(getCatsFetch());
@@ -18,15 +15,7 @@ export default function Home() {
   console.log(cats);
 
 
-  const handleAuth = () => {
-    if (isAuthenticated) {
-      localStorage.removeItem("authenticated"); // Xóa trạng thái đăng nhập
-      setIsAuthenticated(false);
-    } else {
-      navigate("/login"); // Chuyển đến trang đăng nhập
-    }
-  };
-
+  
   return (
     <div>
     {Array.isArray(cats) ? (
@@ -35,10 +24,7 @@ export default function Home() {
       <p>{JSON.stringify(cats)}</p> 
     )}
 
-    {/* Hiển thị nút tương ứng với trạng thái đăng nhập */}
-    <button onClick={handleAuth}>
-        {isAuthenticated ? "Đăng xuất" : "Đăng nhập"}
-      </button>
+
   </div>
   );
 }

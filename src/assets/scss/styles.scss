@@ -20,6 +20,10 @@
         --normal-font-size: 1rem;
         --small-font-size: .875rem;
     }
+
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 /*===== BASE =====*/
@@ -27,13 +31,19 @@
     box-sizing: border-box;
 }
 
-body{
+/* Đảm bảo trang luôn có chiều cao đầy đủ */
+html, body {
+    height: 100%;
     margin: 0;
     padding: 0;
+    display: flex;
+    flex-direction: column;
     font-family: var(--body-font);
     font-size: var(--normal-font-size);       
     color: var(--first-color-dark);
-}
+  }
+  
+
 h1{
     margin: 0;  
 }
@@ -226,4 +236,20 @@ img{
         }
     }
 }
+
+
+  /* Nội dung chính mở rộng */
+  .app-content {
+    flex: 1;
+  }
+  
+  /* Footer cố định ở cuối */
+  .footer {
+    background-color: #333;
+    color: white;
+    text-align: center;
+    padding: 15px 0;
+    width: 100%;
+  }
+  
 

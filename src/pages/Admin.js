@@ -12,7 +12,7 @@ const Admin = () => {
 
   return (
     <div>
-      <h1>Admin Page</h1>
+      <h1>Xin chào Admin</h1>
       <button onClick={handleLogout}>Đăng xuất</button>
     </div>
   );
