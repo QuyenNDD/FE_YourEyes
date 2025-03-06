@@ -1,73 +1,20 @@
-import { Link,useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import { FaBars } from "react-icons/fa";
-import { useEffect,useState  } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 const StyledHeader = styled.header`
-  background-color: #74c0fc;
-  width: 100%;
-  padding: 10px 12px 8px 12px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  .nav_logo {
-    padding: 0 12px;
-    .nav-logo-link {
-      text-decoration: none;
-      font-size: 24px;
-      color: #fab005;
-      font-weight: bold;
-    }
-  }
-  .menuToggleBtn {
-    display: none;
-    color: white;
-    font-size: 24px;
-    position: absolute;
-    right: 20px;
-    top: 15px;
-    cursor: pointer;
-  }
 
-  @media screen and (max-width: 768px) {
-    flex-direction: column;
-    align-items: flex-start;
-    .menuToggleBtn {
-      display: block;
-    }
-  }
 `;
 const NavManu = styled.ul`
-  list-style: none;
-  display: flex;
 
-  li {
-    &:hover {
-      cursor: pointer;
-      background: #44a8f4;
-      border-radius: 4px;
-    }
-  }
-  .nav-menu-list {
-    text-decoration: none;
-    color: white;
-    display: block;
-    padding: 10px 10px;
-  }
-  @media screen and (max-width: 768px) {
-    display: ${(props) => (props.isToggleOpen ? "block" : "none")};
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    margin-top: 5px;
-  }
 `;
 
 const Header = () => {
   const [isToggleOpen, setIsToggleOpen] = useState(false);
-    const dispatch = useDispatch();
-    const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const [isAuthenticated, setIsAuthenticated] = useState(
     localStorage.getItem("authenticated") === "true"
@@ -89,7 +36,7 @@ const Header = () => {
   return (
     <>
       <StyledHeader>
-        <div className="nav_logo">
+        {/* <div className="nav_logo">
           <Link to={"/"} className="nav-logo-link">
             Logo
           </Link>
@@ -108,13 +55,45 @@ const Header = () => {
           </li>
           <li>
             <button onClick={handleAuth} className="btn btn-warning">
-                  {/* Hiển thị nút tương ứng với trạng thái đăng nhập */}            
+                   
                 {isAuthenticated ? "Đăng xuất" : "Đăng nhập"}
               
             </button>
           </li>
         </NavManu>
-        <FaBars className="menuToggleBtn" onClick={handleToggleOpen} />
+        <FaBars className="menuToggleBtn" onClick={handleToggleOpen} /> */}
+        <section className='menu'>
+          <div className="containerr">
+            <div className="menu-text">
+              <div className="menu-logo">
+                <h2><a href="">StyleHub</a></h2>
+              </div>
+              <div className="menu-content">
+                <ul>
+                  <li><a href="">Trang chủ</a></li>
+                  <li><a href="">Sản phẩm</a></li>
+                  <li><a href="">Blog</a></li>
+                  <li><a href="">Giới thiệu</a></li>
+                  <li><a href="">Liên hệ</a></li>
+                </ul>
+              </div>
+              <div className="menu-customer">
+                <ul>
+                  <li><a href=""><i class="fa-solid fa-magnifying-glass"></i></a></li>
+                  <Link to={"/Login"} >
+                    <li><a href=""><i class="fa-regular fa-user"></i></a></li>
+                  </Link>
+                  <li><a href="">
+                    <div class="cart-icon">
+                      <i class="fas fa-shopping-cart"></i>
+                      <div class="badge">0</div>
+                    </div>
+                  </a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
       </StyledHeader>
     </>
   );
