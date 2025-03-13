@@ -26,12 +26,14 @@ saga.run(catSaga);
 
 
 
-function SliderController({ intervalTime = 3000, maxSlides = 4 }) {
+export function SliderController({ intervalTime = 3000, maxSlides = 4 }) {
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
     const sliderContent = document.querySelector('.slider-content-left-top');
     const sliderBotton = document.querySelectorAll('.slider-content-left-botton li');
+    console.log("content:::", sliderContent);
+    console.log("contentBotton:::", sliderBotton);
     if (sliderContent) {
       sliderContent.style.left = `-${index * 100}%`;
     }
@@ -115,7 +117,7 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <App />
-      <SliderController />
+      {/* <SliderController /> */}
     </Provider>
   </React.StrictMode>
 );

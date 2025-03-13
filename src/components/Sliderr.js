@@ -1,6 +1,8 @@
 import React from 'react';
+import { SliderController } from '..';
 
 const Sliderr = () =>{
+  SliderController({intervalTime : 3000, maxSlides : 4});
     return (
         <section className='slider'>
           <div className='containerr'>

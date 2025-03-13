@@ -79,6 +79,24 @@ button:hover {
   color: #fff;
   cursor: pointer;
 }
+table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid #545252/* Gộp các border lại với nhau */
+}
+.tablee {
+  padding: 20px 0;
+}
+
+th, td {
+  border: 1px solid #545252 !important; /* Border cho các ô */
+  padding: 8px; 
+  text-align: left; 
+}
+
+th {
+  background-color: #f2f2f2; 
+}
 /* ----------------------header--------------- */
 .menu-logo h2 a{
   color: black;
@@ -132,6 +150,9 @@ button:hover {
 }
 .menu-customer ul li:nth-child(1) {
   cursor: default;
+}
+.menu-customer ul li:nth-child(3){
+  padding-top: 0px;
 }
 .cart-icon {
   position: relative; /* Quan trọng để định vị badge */
@@ -362,19 +383,15 @@ li{
   color: #ddd;
   font-size: 12px;
 }
+.slider-product-1-content-items-text li:nth-child(2):hover{
+  color: #61dafb;
+}
 .slider-product-1-content-items-text li:nth-child(3){
   font-size: 13px;
 }
 .slider-product-1-content-items-text li:nth-child(4){
   text-decoration: line-through;
   color: #333;
-}
-.slider-product-1-content-items-text li:nth-child(2):hover{
-  color: #61dafb;
-  
-}
-.slider-product-1-content-items-text li:nth-child(5){
-  font-weight: bold;
 }
 /* --------------product-buy---------------- */
 .product-buy-1 {
@@ -451,3 +468,218 @@ li{
   justify-content: space-between;
   margin-bottom: 20px;
 }
+/* --------------------Menubar------------ */
+.menubar {
+  border: 1px solid #000;
+}
+.menubar ul{
+  padding-left: 0;
+  display: flex;
+  margin-bottom: 0px;
+}
+.menubar ul li {
+  padding: 5px 5px;
+}
+.menubar ul li a{
+  text-decoration: none;
+  padding-right:  7px;
+}
+.menubar ul li:nth-child(1) a{
+  border-right: 1px solid #000
+}
+/* --------------------Contact----------- */
+.Info span{
+  font-weight: bold;
+}
+/* ----------About------------------- */
+.Introduction {
+  display:flex;
+  justify-content: space-between;
+  padding: 20px 10px;
+}
+.Introduction_text {
+  width: 80%;
+  border: 1px solid #bfb8b8;
+  padding: 20px 10px;
+}
+.Introduction_page {
+  width: 20%;
+  padding: 0px 10px;
+  margin-left: 10px;
+}
+.Introduction_page_title {
+  border: 1px solid #bfb8b8;
+  margin-bottom: 10px;
+}
+.Introduction_page_tile_content > ul{
+  margin-left: 0px;
+}
+.Introduction_page_tile_content ul li{
+  margin: 5px 0;
+}
+.Introduction_page_tile_content ul li a{
+  text-decoration: none;
+
+}
+.Introduction_page_tile_content ul li:nth-child(1) {
+  font-weight: bold;
+}
+/* ----------------Item----------- */
+.Item-pages {
+  display: flex;
+  padding-bottom: 50px;
+  
+}
+.Item-img{
+
+  position: relative;
+  width: 60%;
+  padding-right: 15px;
+}
+.Item-img img {
+  width: 100%;
+  height: 100%;
+}
+.Item-content {
+  width: 40%;
+  padding-left: 30px;
+}
+.Item-content-button-add {
+  width: 170px;;
+}
+.Item-content-description-header {
+  padding-top: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #bfb8b8;
+}
+.Item-content-description-header p{
+  font-weight: bold;
+}
+/* ---------------------login-page-------------------------- */
+.login { 
+  height: 130vh !important;
+}
+.Login-page {
+  display: block;
+}
+.Login-page ul {
+  display: flex;
+  justify-content: center;
+}
+.Login-page ul li {
+  padding: 0px 25px;
+  /* margin-right: 50px; */
+}
+.Login-page ul li a{
+  font-weight: bold;
+  font-size: 20px;
+  text-decoration: none;
+}
+.Login-page ul li:nth-child(1) {
+  border-right: 2px solid #000;
+}
+
+/* --------------------------------------Cart-pages---------------------------------------- */
+.cart-header {
+  display: flex;
+  /* padding-bottom: 40px; */
+  border-bottom: 1px solid #8b8787;
+}
+.cart-header a {
+  padding-left: 80px;
+  color: #232222;
+}
+.cart-product {
+   padding: 20px 0px;
+}
+.cart-infor {
+  margin: 20px 0px;
+}
+/* --------------------------------Product-item-cart------------------------------------------ */
+
+.product-cart-1-content-product-item-text{
+  padding-top: 5px;
+}
+.product-cart-1-content-product-item-text li:nth-child(1){
+  height: 30px;
+  width: 70%;
+  background-color: red;
+  display: inline-block;
+  align-items: center;
+  line-height: 30px;
+  border-radius: 40px;
+}
+.product-cart-1-content-product-item-text li:nth-child(1) p{
+  padding-left: 11px;
+  color: #ddd;
+  font-size: 12px;
+}
+.product-cart-1-content-product-item-text li:nth-child(2):hover{
+  color: #61dafb;
+  
+}
+.product-cart-1-content-product-item-text li:nth-child(3){
+  font-size: 13px;
+}
+.product-cart-1-content-product-item-text li:nth-child(4){
+  /* text-decoration: line-through; */
+  color: #333;
+}
+
+/* --------------------------product-button---------------------------------------- */
+.product-button {
+  display: flex;
+  padding-left: 300px;
+}
+.product-button li{
+  padding: 0px 5px;
+}
+.Product-cartergory {
+  display: flex;
+}
+
+
+/* ---------------------------------------PAGES-ADMIN-------------------------------------------- */
+nav {
+  background-color: #343a40;
+  float: left;
+  width: 20%;
+  padding: 20px;
+  height: 100vh;
+  position: relative;
+  background-attachment: fixed;
+}
+
+nav .navigation {
+  list-style-type: none;
+  padding-left: 19px;
+  margin-top: 150px;
+  margin-bottom: 100px;
+  font-size: 19px;
+} 
+nav .navigation li {
+  display: block;
+  border-bottom: 1px solid #fff;
+}
+nav .navigation li a {
+  padding: 9px 0;
+  display: block;
+  cursor: pointer;
+  color: aliceblue;
+  text-decoration: none;
+}
+nav .navigation li a.active{
+  color: #80db66;
+}
+.navigation li a:hover{
+  color: #80db66;
+}
+article {
+  float: left;
+  width: 77.35%;
+  height: 100vh;
+  background-repeat: repeat;
+  position: relative;
+  padding: 10px 20px;
+}
+/* --------------------------------------CartList----------------------------------------- */

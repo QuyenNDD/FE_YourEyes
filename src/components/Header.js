@@ -1,24 +1,21 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import styled from "styled-components";
 import { FaBars } from "react-icons/fa";
-import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useState, useEffect } from "react";
 
 const StyledHeader = styled.header`
-
-`;
-const NavManu = styled.ul`
-
+  /* Thêm các kiểu cho header nếu cần */
 `;
 
 const Header = () => {
   const [isToggleOpen, setIsToggleOpen] = useState(false);
-  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-  const [isAuthenticated, setIsAuthenticated] = useState(
-    localStorage.getItem("authenticated") === "true"
-  );
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    setIsAuthenticated(!!token);
+  }, []);
 
   const handleToggleOpen = () => {
     setIsToggleOpen(!isToggleOpen);
@@ -26,76 +23,55 @@ const Header = () => {
 
   const handleAuth = () => {
     if (isAuthenticated) {
-      localStorage.removeItem("authenticated"); // Xóa trạng thái đăng nhập
+      localStorage.removeItem("token");
       setIsAuthenticated(false);
+      alert('Bạn đã đăng xuất thành công!');
+      navigate('/login');
     } else {
-      navigate("/login"); // Chuyển đến trang đăng nhập
+      navigate("/login");
     }
   };
 
   return (
-    <>
-      <StyledHeader>
-        {/* <div className="nav_logo">
-          <Link to={"/"} className="nav-logo-link">
-            Logo
-          </Link>
-        </div>
-
-        <NavManu isToggleOpen={isToggleOpen}>
-          <li>
-            <Link to={"/about"} className="nav-menu-list">
-              About
-            </Link>
-          </li>
-          <li>
-            <Link to={"/contact"} className="nav-menu-list">
-              Contact
-            </Link>
-          </li>
-          <li>
-            <button onClick={handleAuth} className="btn btn-warning">
-                   
-                {isAuthenticated ? "Đăng xuất" : "Đăng nhập"}
-              
-            </button>
-          </li>
-        </NavManu>
-        <FaBars className="menuToggleBtn" onClick={handleToggleOpen} /> */}
-        <section className='menu'>
-          <div className="containerr">
-            <div className="menu-text">
-              <div className="menu-logo">
-                <h2><a href="">StyleHub</a></h2>
-              </div>
-              <div className="menu-content">
-                <ul>
-                  <li><a href="">Trang chủ</a></li>
-                  <li><a href="">Sản phẩm</a></li>
-                  <li><a href="">Blog</a></li>
-                  <li><a href="">Giới thiệu</a></li>
-                  <li><a href="">Liên hệ</a></li>
-                </ul>
-              </div>
-              <div className="menu-customer">
-                <ul>
-                  <li><a href=""><i class="fa-solid fa-magnifying-glass"></i></a></li>
-                  <Link to={"/Login"} >
-                    <li><a href=""><i class="fa-regular fa-user"></i></a></li>
-                  </Link>
-                  <li><a href="">
-                    <div class="cart-icon">
-                      <i class="fas fa-shopping-cart"></i>
-                      <div class="badge">0</div>
+    <StyledHeader>
+      <FaBars className="menuToggleBtn" onClick={handleToggleOpen} />
+      <section className='menu'>
+        <div className="containerr">
+          <div className="menu-text">
+            <div className="menu-logo">
+              <h2><Link to="/">StyleHub</Link></h2> 
+            </div>
+            <div className="menu-content">
+              <ul>
+                <li><Link to="/Home">Trang chủ</Link></li>
+                <li><Link to="/Sanpham">Sản phẩm</Link></li>
+                <li><Link to="/Blog">Blog</Link></li>
+                <li><Link to="/About">Giới thiệu</Link></li>
+                <li><Link to="/Contact">Liên hệ</Link></li>
+              </ul>
+            </div>
+            <div className="menu-customer">
+              <ul>
+                <li><Link to="/ProductSearch"><i className="fa-solid fa-magnifying-glass"></i></Link></li>
+                <li>
+                  <Link to="/Cart">
+                    <div className="cart-icon">
+                      <i className="fas fa-shopping-cart"></i>
+                      <div className="badge">0</div>
                     </div>
-                  </a></li>
-                </ul>
-              </div>
+                  </Link>
+                </li>
+                <li>
+                  <button onClick={handleAuth} className="btn btn-warning">
+                    {isAuthenticated ? "Đăng xuất" : "Đăng nhập"}
+                  </button>
+                </li>
+              </ul>
             </div>
           </div>
-        </section>
-      </StyledHeader>
-    </>
+        </div>
+      </section>
+    </StyledHeader>
   );
 };
 
