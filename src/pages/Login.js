@@ -35,9 +35,8 @@ const Login = () => {
     <div>
       <div className="login">
             <div className="login__content">
-                {/* <div className="login__img"> */}
                   <img src={loginImage} alt="Login" />
-                {/* </div> */}
+
 
                 <div className="login__forms">
                 <form onSubmit={(e) => { e.preventDefault(); handleLogin(); }} className="login__registre">

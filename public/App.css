@@ -1,25 +1,3 @@
-.App {
-  text-align: center;
-}
-
-body {
-  font-family: "Oswald";
-  background: #f4f4f4;
-}
-
-h1 {
-  font-size: 48px;
-  margin: 20px;
-}
-
-p {
-  font-weight: 100;
-  font-size: 16px;
-  letter-spacing: 0.5px;
-}
-hr {
-  margin: 20px 30%;
-}
 
 .App-link {
   color: #61dafb;
@@ -45,41 +23,7 @@ a {
 li {
   list-style: none;
 }
-
-.row {
-  display: flex;
-  width: 100%;
-  height: 100%;
-  text-align: left;
-  margin-bottom: 30px;
-  background: #fff;
-  border-radius: 25px;
-}
-
-.Gallery {
-  margin: 0 12%;
-  padding: 10px;
-}
-
-.column-right {
-  padding: 0 30px;
-}
-
-button {
-  margin-bottom: 30px;
-  border-width: 1px;
-  border-style: solid;
-  color: #000;
-  padding: 20px;
-  background: none;
-}
-
-button:hover {
-  background: #000;
-  color: #fff;
-  cursor: pointer;
-}
-/* ----------------------header--------------- */
+/* ----------------------menu--------------- */
 .menu-logo h2 a{
   color: black;
   font-size: 40px;
@@ -156,75 +100,6 @@ section ul a{
   color: black;
   font-size: 14px;
   align-items: center;
-}
-/* -----------------footer---------------- */
-.footerr {
-  border-top: 1px solid #000;
-}
-.ft-logo {
-  display: flex;
-  justify-content: center;
-  font-size: 20px;
-  padding: 30px 0;
-}
-.ft-logo a{
-  text-decoration: none;
-  color: #000;
-}
-.ft-title{
-  display: flex;
-  justify-content: center;
-  font-weight: bold;
-  padding-bottom: 30px;
-}
-.ft-desc{
-  display: flex;
-  justify-content:space-between;
-  max-width: 700px;
-  margin: 0 auto;
-  font-size: 14px;
-}
-.ft-socical ul {
-  display: flex;
-  justify-content: center;
-}
-.ft-socical ul li {
-  padding: 20px 20px;
-}
-.ft-socical ul li a{
-  color: #000;
-}
-/* ----------------last-slider--------------- */
-.last-slide ul {
-  display: flex;
-  justify-content: center;
-  padding-bottom: 50px;
-}
-.last-slide ul li a{
-  text-decoration: none;
-}
-.last-slide ul li {
-  padding: 10px 25px;
-  border-bottom: 1px solid #333;
-}
-.last-slide ul li a{
-  padding-right: 35px;
-  color: #000;
-}
-.last-slide ul li:nth-child(1) a{
-  border-right: 1px solid #333;
-}
-.last-slide ul li:nth-child(2) a{
-  border-right: 1px solid #333;
-}
-.last-slide ul li:nth-child(3) a{
-  border-right: 1px solid #333;
-}
-.last-slide ul li:nth-child(4) a{
-  border-right: 1px solid #333;
-}
-.last-slide ul li:nth-child(5) a{
-  border-right: 1px solid #333;
 }
 /* ----------------slider--------------- */
 li{
@@ -379,6 +254,7 @@ li{
 /* --------------product-buy---------------- */
 .product-buy-1 {
   margin-bottom: 40px;
+  border-bottom: 1px solid #4e4c4c;
 }
 .product-buy-1-content-product{
   display: flex;
@@ -450,4 +326,81 @@ li{
   display: flex;
   justify-content: space-between;
   margin-bottom: 20px;
+}
+.product-buy-1-content-title ul{
+  display: flex;
+}
+
+.product-buy-1-content-title ul li {
+  padding: 6px 15px;
+  margin-left: 5px;
+  border: 1px solid #ddd;
+  border-radius: 40px;
+}
+.product-buy-1-content-title ul li a{
+  text-decoration: none;
+}
+.product-buy-1-content-title ul li:hover a{
+  color: aqua;
+}
+/* -----------------ft---------------- */
+.ft-logo {
+  display: flex;
+  justify-content: center;
+  font-size: 20px;
+  padding-bottom: 20px;
+}
+.ft-logo a{
+  text-decoration: none;
+}
+.ft-title{
+  display: flex;
+  justify-content: center;
+  font-weight: bold;
+  padding-bottom: 30px;
+}
+.ft-desc{
+  display: flex;
+  justify-content:space-between;
+  max-width: 700px;
+  margin: 0 auto;
+  font-size: 14px;
+}
+.ft-socical ul {
+  display: flex;
+  justify-content: center;
+}
+.ft-socical ul li {
+  padding: 20px 20px;
+}
+/* ----------------last-slider--------------- */
+.last-slide ul {
+  display: flex;
+  justify-content: center;
+  padding-bottom: 50px;
+}
+.last-slide ul li a{
+  text-decoration: none;
+}
+.last-slide ul li {
+  padding: 10px 25px;
+  border-bottom: 1px solid #333;
+}
+.last-slide ul li a{
+  padding-right: 35px;
+}
+.last-slide ul li:nth-child(1) a{
+  border-right: 1px solid #333;
+}
+.last-slide ul li:nth-child(2) a{
+  border-right: 1px solid #333;
+}
+.last-slide ul li:nth-child(3) a{
+  border-right: 1px solid #333;
+}
+.last-slide ul li:nth-child(4) a{
+  border-right: 1px solid #333;
+}
+.last-slide ul li:nth-child(5) a{
+  border-right: 1px solid #333;
 }
