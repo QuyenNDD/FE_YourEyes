@@ -1,14 +1,13 @@
 import React from 'react';
 
-const ProductItem = ({ image, title, price, oldPrice, discount, date }) => {
+const ProductItem = ({ imageUrl, name, price, onClick }) => {
   return (
-    <div className="product-buy-1-content-product-item">
-      <img src={image} alt={title} />
+    <div className="product-buy-1-content-product-item" onClick={onClick}>
+      <img src={imageUrl} alt="#" />
       <div className="product-buy-1-content-product-item-text">
-        <li><p>{date}</p></li>
-        <li>{title}</li>
+        <li><p>San sale 3/3</p></li>
+        <li>{name}</li>
         <li>{price} <sup>đ</sup></li>
-        <li>{oldPrice} <sup>đ</sup></li>
       </div>
     </div>
   );

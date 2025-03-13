@@ -1,69 +1,72 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import ProductItem from './Product';
 
 const ShowProduct = () => {
-  const products = [
-    { image: 'image6.webp', title: 'Iphone 12 Pro', price: '30.000.000', oldPrice: '15.000.000', date: 'Giá ngay 3/3' },
-    { image: 'image7.webp', title: 'Iphone 12 Pro', price: '30.000.000', oldPrice: '15.000.000', date: 'Giá ngay 3/3' },
-    { image: 'image6.webp', title: 'Iphone 12 Pro', price: '30.000.000', oldPrice: '15.000.000', date: 'Giá ngay 3/3' },
-    { image: 'image7.webp', title: 'Iphone 12 Pro', price: '30.000.000', oldPrice: '15.000.000', date: 'Giá ngay 3/3' },
-    { image: 'image6.webp', title: 'Iphone 12 Pro', price: '30.000.000', oldPrice: '15.000.000', date: 'Giá ngay 3/3' },
-    { image: 'image7.webp', title: 'Iphone 12 Pro', price: '30.000.000', oldPrice: '15.000.000', date: 'Giá ngay 3/3' },
-    { image: 'image6.webp', title: 'Iphone 12 Pro', price: '30.000.000', oldPrice: '15.000.000', date: 'Giá ngay 3/3' },
-    { image: 'image7.webp', title: 'Iphone 12 Pro', price: '30.000.000', oldPrice: '15.000.000', date: 'Giá ngay 3/3' },
-    { image: 'image6.webp', title: 'Iphone 12 Pro', price: '30.000.000', oldPrice: '15.000.000', date: 'Giá ngay 3/3' },
-    { image: 'image7.webp', title: 'Iphone 12 Pro', price: '30.000.000', oldPrice: '15.000.000', date: 'Giá ngay 3/3' },
-    { image: 'image6.webp', title: 'Iphone 12 Pro', price: '30.000.000', oldPrice: '15.000.000', date: 'Giá ngay 3/3' },
-    { image: 'image7.webp', title: 'Iphone 12 Pro', price: '30.000.000', oldPrice: '15.000.000', date: 'Giá ngay 3/3' }
-  ];
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
-  // const [products, setProducts] = useState([]);
-  // const [loading, setLoading] = useState(true);
-  // const [error, setError] = useState(null);
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch('http://localhost:8080/api/products/getAll');
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        const data = await response.json();
 
-  // useEffect(() => {
-  //   const fetchProducts = async () => {
-  //     try {
-  //       const response = await fetch('/api/products/getAll'); // Thay đổi URL này thành API thực tế của bạn
-  //       if (!response.ok) {
-  //         throw new Error('Network response was not ok');
-  //       }
-  //       const data = await response.json();
-  //       setProducts(data);
-  //       setLoading(false);
-  //     } catch (err) {
-  //       setError(err);
-  //       setLoading(false);
-  //     }
-  //   };
+        // Truy cập vào thuộc tính content để lấy mảng sản phẩm
+        if (Array.isArray(data.content)) {
+          setProducts(data.content);
+        } else {
+          throw new Error('Dữ liệu không phải là một mảng');
+        }
+      } catch (err) {
+        setError(err);
+      } finally {
+        setLoading(false);
+      }
+    };
 
-  //   fetchProducts();
-  // }, []);
+    fetchProducts();
+  }, []);
 
-  // if (loading) {
-  //   return <p>Đang tải sản phẩm...</p>;
-  // }
+  if (loading) {
+    return <p>Đang tải sản phẩm...</p>;
+  }
 
-  // if (error) {
-  //   return <p>Có lỗi xảy ra khi lấy dữ liệu: {error.message}</p>;
-  // }
+  if (error) {
+    return (
+      <div>
+        <p>Có lỗi xảy ra khi lấy dữ liệu: {error.message}</p>
+        <button onClick={() => window.location.reload()}>Thử lại</button>
+      </div>
+    );
+  }
+
+  if (products.length === 0) {
+    return <p>Không có sản phẩm nào để hiển thị.</p>;
+  }
+
+  const handleProductClick = (productId) => {
+    navigate(`/product/${productId}`);
+  };
+
   return (
     <section className='product-buy-1'>
       <div className="containerr">
         <div className="product-buy-1-content">
-          <div className="product-buy-1-content-title">
-            <h2>SẢN PHẨM NỔI BẬT NHẤT</h2>
-          </div>
           <div className="product-buy-1-content-product">
-            {products.map((product, index) => (
+            {products.map((product) => (
               <ProductItem
-                key={index}
-                image={product.image}
-                title={product.title}
+                key={product.id}
+                imageUrl={product.imageUrl}
+                name={product.name}
                 price={product.price}
-                oldPrice={product.oldPrice}
-                discount={product.discount}
                 date={product.date}
+                onClick={() => handleProductClick(product.id)}
               />
             ))}
           </div>

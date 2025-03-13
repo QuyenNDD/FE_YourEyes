@@ -1,14 +1,14 @@
 import React from 'react';
 
-const ProductSale = ({ image, title, price, oldPrice, discount, date }) => {
+const ProductSale = ({ imageUrl, name, price, date, onClick }) => {
   return (
-    <div className="slider-product-1-content-item">
-      <img src={image} alt={title} />
+    <div className="slider-product-1-content-item" onClick={onClick}>
+      <img src={imageUrl} alt={name} />
       <div className="slider-product-1-content-items-text">
-        <li><p>{date}</p></li>
-        <li>{title}</li>
+        <li><p>San Sale 3/3</p></li>
+        <li>{name}</li>
         <li>{price} <sup>đ</sup></li>
-        <li>{oldPrice} <sup>đ</sup></li>
+        {/* <li>{oldPrice} <sup>đ</sup></li> */}
       </div>
     </div>
   );
