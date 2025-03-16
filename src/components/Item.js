@@ -58,7 +58,7 @@ const ProductDetail = () => {
     const handleAddToCart = async () => {
         const token = localStorage.getItem('token');
         try {
-            
+
             const response = await fetch('http://localhost:8080/api/cart/add', {
                 method: 'POST',
                 headers: {
@@ -70,11 +70,11 @@ const ProductDetail = () => {
                     quantity: quantity, // Số lượng sản phẩm
                 }),
             });
-    
+
             if (!response.ok) {
                 throw new Error('Network response was not ok ' + response.statusText);
             }
-    
+
             const data = await response.json();
             alert(data.message); // Thông báo thành công
         } catch (err) {
@@ -94,19 +94,24 @@ const ProductDetail = () => {
     if (!product) {
         return <p>Không tìm thấy sản phẩm.</p>;
     }
-
+    const formatPrice = (price) => {
+        if (typeof price !== 'number') return '';
+        return price.toLocaleString('vi-VN');
+    };
 
     return (
         <section className="Item">
             <div className="containerr">
                 <div className="Item-pages">
-                    <div className="Item-img">
-                        <img src={product.imageUrl} alt={product.name} />
+                    <div className="Item-pages-Img">
+                        <div className="Item-img">
+                            <img src={product.imageUrl} alt={product.name} />
+                        </div>
                     </div>
                     <div className="Item-content">
                         <div className="Item-content-text">
                             <h4>{product.name}</h4>
-                            <p>{product.price}<sup>đ</sup></p>
+                            <p>Giá: {formatPrice(product.price)} VND</p>
                         </div>
                         <div className="Item-content-button-add">
                             <div className="input-group">
@@ -123,9 +128,6 @@ const ProductDetail = () => {
                             </div>
                             <div className="mt-2">
                                 <button className="btn btn-outline-primary" onClick={handleAddToCart}>Thêm vào giỏ hàng</button>
-                            </div>
-                            <div className="mt-2">
-                                <button className="btn btn-primary">Mua ngay</button>
                             </div>
                         </div>
                         <div className="Item-content-description">

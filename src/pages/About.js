@@ -14,15 +14,15 @@ const About = () => {
                     <div className="Introduction_text">
                         <div className="Introduction_text_title">
                             <h2>Giới thiệu</h2>
-                            <p>Chào mừng đến với "Ánh Nhìn Hoàn Hảo" - Nơi bạn tìm thấy chiếc kính hoàn hảo! <br /> <br />
+                            <p>Chào mừng đến với "StyleHub" - Nơi bạn tìm thấy chiếc kính hoàn hảo! <br /> <br />
 
                                 <h4>Chúng tôi là ai?</h4> <br />
 
-                                "Ánh Nhìn Hoàn Hảo" ra đời từ niềm đam mê mang đến cho mọi người những chiếc kính không chỉ đẹp về thẩm mỹ mà còn tốt cho sức khỏe đôi mắt.
+                                "StyleHub" ra đời từ niềm đam mê mang đến cho mọi người những chiếc kính không chỉ đẹp về thẩm mỹ mà còn tốt cho sức khỏe đôi mắt.
                                 Chúng tôi hiểu rằng, một chiếc kính phù hợp không chỉ giúp bạn nhìn rõ hơn mà còn thể hiện phong cách và cá tính riêng.
                                 Hành trình của chúng tôi bắt đầu từ việc tìm kiếm những thương hiệu mắt kính uy tín, chất lượng, và những thiết kế độc đáo, thời trang nhất.
                                 <br /> <h4>Chúng tôi cam kết?</h4>
-                                <br /> Ánh Nhìn Hoàn Hảo" cam kết mang đến cho khách hàng những sản phẩm mắt kính chính hãng, chất lượng cao, với đa dạng mẫu mã và kiểu dáng.
+                                <br /> "StyleHub" cam kết mang đến cho khách hàng những sản phẩm mắt kính chính hãng, chất lượng cao, với đa dạng mẫu mã và kiểu dáng.
                                 Chúng tôi luôn đặt sự hài lòng của khách hàng lên hàng đầu, với dịch vụ tư vấn chuyên nghiệp, đo mắt miễn phí, và chính sách bảo hành, đổi trả linh hoạt.
                                 Chúng tôi mong muốn mang đến cho khách hàng những trải nghiệm mua sắm tuyệt vời và giúp khách hàng tìm được chiếc kính hoàn hảo nhất.
                                 <section id="features">
@@ -35,6 +35,7 @@ const About = () => {
                                         <li>Có nhiều màu sắc và kiểu dáng khác nhau</li>
                                     </ul>
                                 </section>
+                                
                             </p>
                         </div>
                     </div>

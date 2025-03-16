@@ -2,7 +2,7 @@ import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from 'axios';
 import loginImage from "../assets/images/img-login.svg";
-import { Link } from "react-router-dom"; // Import Link
+import { Link } from "react-router-dom"; 
 
 const Login = () => {
   const navigate = useNavigate();
@@ -14,7 +14,7 @@ const Login = () => {
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
-      navigate('/');
+      navigate('/Admin');
     }
   }, [navigate]);
 
@@ -26,7 +26,7 @@ const Login = () => {
       const response = await axios.post('http://localhost:8080/api/auth/login', { email, password });
       localStorage.setItem('token', response.data.token);
       alert('Đăng nhập thành công!');
-      navigate('/');
+      navigate('/Admin');
     } catch (err) {
       setError(err.response?.data?.message || 'Đăng nhập thất bại');
     } finally {

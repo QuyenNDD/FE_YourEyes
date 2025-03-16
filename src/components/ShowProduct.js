@@ -19,7 +19,7 @@ const ShowProduct = () => {
 
         // Truy cập vào thuộc tính content để lấy mảng sản phẩm
         if (Array.isArray(data.content)) {
-          setProducts(data.content);
+          setProducts(data.content.slice(0, 8));
         } else {
           throw new Error('Dữ liệu không phải là một mảng');
         }

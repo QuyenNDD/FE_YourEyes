@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import ShowProduct from "../components/ShowProduct";
+import ProductList from '../components/DanhSachSanPham';
 
 const Sanpham = () => {
     const [productCount, setProductCount] = useState(0);
@@ -8,60 +8,56 @@ const Sanpham = () => {
     const [error, setError] = useState(null);
     const [selectedCategory, setSelectedCategory] = useState(null);
 
-    // Danh sách các danh mục
     const categories = [
-        { id: 1, name: 'Category 1' },
-        { id: 2, name: 'Category 2' },
-        { id: 3, name: 'Category 3' },
+        { id: 1, name: 'Dior' },
+        { id: 2, name: 'Chopard' },
+        { id: 3, name: 'Cartier' },
     ];
 
     useEffect(() => {
-        const fetchProductCount = async () => {
+        const fetchProducts = async () => {
+            setLoading(true); // Hiển thị trạng thái đang tải
             try {
                 const response = await fetch('http://localhost:8080/api/products/getAll');
                 if (!response.ok) {
-                    throw new Error('Network response was not ok');
+                    throw new Error('Lỗi khi gọi API');
                 }
                 const data = await response.json();
-                setProductCount(data.totalElements);
+
+                // Lưu danh sách sản phẩm vào state
+                if (Array.isArray(data.content)) {
+                    setProducts(data.content);
+                    // setProductCount(data.totalElements) // Dữ liệu sản phẩm
+                } else {
+                    throw new Error('Dữ liệu không hợp lệ');
+                }
             } catch (error) {
-                console.error('Error fetching product count:', error);
+                setError(error); // Lưu lỗi
+            } finally {
+                setLoading(false); // Kết thúc trạng thái tải
             }
         };
 
-        fetchProductCount();
+        fetchProducts(); // Gọi hàm
     }, []);
+    const filteredProducts = selectedCategory
+        ? products.filter(product => product.categoryId?.id === selectedCategory)
+        : products;
 
     useEffect(() => {
-        const fetchProducts = async () => {
-            setLoading(true);
-            try {
-                const url = selectedCategory 
-                    ? `http://localhost:8080/api/products?categoryId=${selectedCategory}` 
-                    : 'http://localhost:8080/api/products/getAll'; // Lấy tất cả sản phẩm
-                const response = await fetch(url);
-                if (!response.ok) {
-                    throw new Error('Network response was not ok');
-                }
-                const data = await response.json();
-                console.log(data);
-                setProducts(data.products); // Giả sử dữ liệu sản phẩm nằm trong trường `products`
-            } catch (error) {
-                setError(error);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchProducts();
-    }, [selectedCategory]); // Chạy lại khi selectedCategory thay đổi
+        if (selectedCategory) {
+            setProductCount(filteredProducts.length); // Đếm số lượng sản phẩm đã lọc
+        } else {
+            setProductCount(products.length); // Hiển thị tổng số nếu không lọc
+        }
+    }, [filteredProducts, selectedCategory]);
 
     const handleCategoryChange = (categoryId) => {
         setSelectedCategory(categoryId);
     };
 
     const handleShowAllProducts = () => {
-        setSelectedCategory(null); // Đặt lại để hiển thị tất cả sản phẩm
+        setSelectedCategory(null);
     };
 
     if (loading) {
@@ -78,13 +74,22 @@ const Sanpham = () => {
                 <h2>Tất cả sản phẩm</h2>
                 <div className="product-button">
                     <li>
-                        <button className="btn btn-outline-secondary" type="button" onClick={handleShowAllProducts}>
+                        <button
+                            className={`btn btn-outline-secondary ${selectedCategory === null ? 'active' : ''}`}
+                            type="button"
+                            onClick={handleShowAllProducts}
+                        >
                             Hiển Thị Tất Cả
                         </button>
                     </li>
                     {categories.map((category) => (
                         <li key={category.id}>
-                            <button className="btn btn-outline-secondary" type="button" onClick={() => handleCategoryChange(category.id)}>
+                            <button
+                                className={`btn btn-outline-secondary ${selectedCategory === category.id ? 'active' : ''
+                                    }`}
+                                type="button"
+                                onClick={() => handleCategoryChange(category.id)}
+                            >
                                 {category.name}
                             </button>
                         </li>
@@ -101,7 +106,7 @@ const Sanpham = () => {
                     </li>
                 </div>
             </div>
-            <ShowProduct products={products} />
+            <ProductList products={filteredProducts} />
         </div>
     );
 };

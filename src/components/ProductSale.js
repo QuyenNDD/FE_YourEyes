@@ -1,14 +1,16 @@
 import React from 'react';
 
-const ProductSale = ({ imageUrl, name, price, date, onClick }) => {
+const ProductSale = ({ imageUrl, name, price, onClick }) => {
+  const formatPrice = (price) => {
+    if (typeof price !== 'number') return '';
+    return price.toLocaleString('vi-VN');
+  };
   return (
     <div className="slider-product-1-content-item" onClick={onClick}>
       <img src={imageUrl} alt={name} />
       <div className="slider-product-1-content-items-text">
-        <li><p>San Sale 3/3</p></li>
         <li>{name}</li>
-        <li>{price} <sup>đ</sup></li>
-        {/* <li>{oldPrice} <sup>đ</sup></li> */}
+        <li>{formatPrice(price)} VND</li>
       </div>
     </div>
   );

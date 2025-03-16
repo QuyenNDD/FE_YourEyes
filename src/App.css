@@ -11,12 +11,14 @@ h1 {
   font-size: 48px;
   margin: 20px;
 }
-
-p {
+.pagination {
+  display: flex;
+  justify-content: center;
+}
+/* p {
   font-weight: 100;
   font-size: 16px;
-  letter-spacing: 0.5px;
-}
+} */
 hr {
   margin: 20px 30%;
 }
@@ -40,6 +42,10 @@ a {
 }
 .containerr{
   max-width: 1000px;
+  margin: auto;
+}
+.containerrr{
+  max-width: 700px;
   margin: auto;
 }
 li {
@@ -129,12 +135,16 @@ th {
   font-weight: 600;
   letter-spacing: 0.75;
 }
+
 .menu-content ul li a{
   margin-bottom: 0;
   text-decoration: none;
 }
 .menu-content ul li:hover a {
   color: #e5d41b;
+}
+.menu-content ul li a.active {
+  color: #b69c34;
 }
 .menu-customer ul{
   display: flex;
@@ -370,28 +380,13 @@ li{
   padding-top: 5px;
 }
 .slider-product-1-content-items-text li:nth-child(1){
-  height: 30px;
-  width: 70%;
-  background-color: red;
-  display: inline-block;
-  align-items: center;
-  line-height: 30px;
-  border-radius: 40px;
+  font-weight: bold;
 }
-.slider-product-1-content-items-text li:nth-child(1) p{
-  padding-left: 11px;
-  color: #ddd;
-  font-size: 12px;
+.slider-product-1-content-items-text li:nth-child(2) {
+  color: #e5d41b;
 }
 .slider-product-1-content-items-text li:nth-child(2):hover{
   color: #61dafb;
-}
-.slider-product-1-content-items-text li:nth-child(3){
-  font-size: 13px;
-}
-.slider-product-1-content-items-text li:nth-child(4){
-  text-decoration: line-through;
-  color: #333;
 }
 /* --------------product-buy---------------- */
 .product-buy-1 {
@@ -425,32 +420,14 @@ li{
   padding-top: 5px;
 }
 .product-buy-1-content-product-item-text li:nth-child(1){
-  height: 30px;
-  width: 70%;
-  background-color: red;
-  display: inline-block;
-  align-items: center;
-  line-height: 30px;
-  border-radius: 40px;
+  font-weight: bold;
 }
-.product-buy-1-content-product-item-text li:nth-child(1) p{
-  padding-left: 11px;
-  color: #ddd;
-  font-size: 12px;
-}
-.product-buy-1-content-product-item-text li:nth-child(3){
-  font-size: 13px;
-}
-.product-buy-1-content-product-item-text li:nth-child(4){
-  text-decoration: line-through;
-  color: #333;
+.product-buy-1-content-product-item-text li:nth-child(2) {
+  color: #e5d41b;
 }
 .product-buy-1-content-product-item-text li:nth-child(2):hover{
   color: #61dafb;
   
-}
-.product-buy-1-content-product-item-text li:nth-child(5){
-  font-weight: bold;
 }
 .product-buy-1{
   margin-top: 30px;
@@ -531,10 +508,10 @@ li{
   
 }
 .Item-img{
-
   position: relative;
   width: 60%;
-  padding-right: 15px;
+  padding: 15px 15px;
+  background-color: #cfc7c7;
 }
 .Item-img img {
   width: 100%;
@@ -601,18 +578,10 @@ li{
   padding-top: 5px;
 }
 .product-cart-1-content-product-item-text li:nth-child(1){
-  height: 30px;
-  width: 70%;
-  background-color: red;
-  display: inline-block;
-  align-items: center;
-  line-height: 30px;
-  border-radius: 40px;
+  font-weight: bold;
 }
-.product-cart-1-content-product-item-text li:nth-child(1) p{
-  padding-left: 11px;
-  color: #ddd;
-  font-size: 12px;
+.product-cart-1-content-product-item-text li:nth-child(3) {
+  color: #e5d41b;
 }
 .product-cart-1-content-product-item-text li:nth-child(2):hover{
   color: #61dafb;
@@ -621,15 +590,11 @@ li{
 .product-cart-1-content-product-item-text li:nth-child(3){
   font-size: 13px;
 }
-.product-cart-1-content-product-item-text li:nth-child(4){
-  /* text-decoration: line-through; */
-  color: #333;
-}
 
 /* --------------------------product-button---------------------------------------- */
 .product-button {
   display: flex;
-  padding-left: 300px;
+  padding-left: 270px;
 }
 .product-button li{
   padding: 0px 5px;
@@ -646,8 +611,9 @@ nav {
   width: 20%;
   padding: 20px;
   height: 100vh;
-  position: relative;
+  position: fixed;
   background-attachment: fixed;
+  overflow-y: auto;
 }
 
 nav .navigation {
@@ -656,6 +622,7 @@ nav .navigation {
   margin-top: 150px;
   margin-bottom: 100px;
   font-size: 19px;
+  overflow-y: auto;
 } 
 nav .navigation li {
   display: block;
@@ -675,6 +642,7 @@ nav .navigation li a.active{
   color: #80db66;
 }
 article {
+  margin-left: 20%;
   float: left;
   width: 77.35%;
   height: 100vh;
@@ -682,4 +650,8 @@ article {
   position: relative;
   padding: 10px 20px;
 }
-/* --------------------------------------CartList----------------------------------------- */
+/* --------------------------------------CartBill----------------------------------------- */
+.Billheader {
+  display: flex;
+  justify-content: center;
+}

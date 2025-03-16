@@ -10,12 +10,12 @@ const Admin = () => {
   // };
 
   return (
-    <section>
+    <div>
       <nav>
         <ul className='navigation'>
-          <li><a className='active'>HOME</a></li>
+          <li><a className='active' href="/Home">HOME</a></li>
           <li><a href="/CartList">QUẢN LÝ KHO</a></li>
-          <li><a href="">QUẢN LÝ TÀI KHOẢN</a></li>
+          <li><a href="/UserList">QUẢN LÝ TÀI KHOẢN</a></li>
           <li><a href="">NHẬP HÀNG</a></li>
           <li><a href="">DOANH THU</a></li>
           <li><a href="">QUẢN LÝ MÃ GIẢM GIÁ</a></li>
@@ -24,7 +24,7 @@ const Admin = () => {
       <article >
 
       </article>
-    </section>
+    </div>
   );
 
 };

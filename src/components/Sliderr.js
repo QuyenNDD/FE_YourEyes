@@ -19,15 +19,14 @@ const Sliderr = () =>{
                   <div className='slider-btn'>
                     <i className='btn-left'><i class="fa-solid fa-circle-chevron-left"></i></i>
                     <i className='btn-right'><i class="fa-solid fa-circle-chevron-right"></i></i>
-    
                   </div>
                 </div>
                 <div className='slider-content-left-botton'>
-                  <li className='active'>Tieu de 1</li>
-                  <li>Tieu de 2</li>
-                  <li>Tieu de 3</li>
-                  <li>Tieu de 4</li>
-                  <li>Tieu de 5</li>
+                  <li className='active'></li>
+                  <li></li>
+                  <li></li>
+                  <li></li>
+                  <li></li>
                 </div>
               </div>
             </div>
