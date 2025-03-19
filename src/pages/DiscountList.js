@@ -9,18 +9,17 @@ const DiscountList = () => {
         code: '',
         description: '',
         discountPercentage: '',
-        start_date: '',
-        end_date: '',
+        startDate: '',
+        endDate: '',
     });
     const [showForm, setShowForm] = useState(false);
 
-    // Replace this with your actual token retrieval logic
     const token = localStorage.getItem('token');
 
     useEffect(() => {
         const fetchDiscounts = async () => {
             try {
-                const response = await axios.get('http://localhost:8080/api/discount/getAll', {
+                const response = await axios.get('http://localhost:8080/api/discount/available', {
                     headers: {
                         Authorization: `Bearer ${token}`,
                     },
@@ -39,29 +38,40 @@ const DiscountList = () => {
     const handleAddDiscount = async (e) => {
         e.preventDefault();
         try {
-            await axios.post('http://localhost:8080/api/discount/add', newDiscount, {
-                headers: {
-                    Authorization: `Bearer ${token}`,
-                },
-            });
-
-
-            // Đặt lại các trường trong form
+            const discountPayload = {
+                code: newDiscount.code,
+                description: newDiscount.description,
+                discountPercentage: parseFloat(newDiscount.discountPercentage),
+                startDate: new Date(newDiscount.startDate).toISOString().split("T")[0], // Format as yyyy-mm-dd
+                endDate: new Date(newDiscount.endDate).toISOString().split("T")[0], // Format as yyyy-mm-dd
+            };
+    
+            await axios.post(
+                'http://localhost:8080/api/discount/add',
+                discountPayload,
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        'Content-Type': 'application/json',
+                    },
+                }
+            );
+    
             setNewDiscount({
                 code: '',
                 description: '',
                 discountPercentage: '',
-                start_date: '',
-                end_date: '',
+                startDate: '',
+                endDate: '',
             });
-            const response = await axios.get('http://localhost:8080/api/discount/getAll', {
+    
+            const response = await axios.get('http://localhost:8080/api/discount/available', {
                 headers: {
-                    Authorization: `Bearer ${token}`
-                }
+                    Authorization: `Bearer ${token}`,
+                },
             });
             setDiscounts(response.data);
-
-            // Ẩn form sau khi gửi thành công
+    
             setShowForm(false);
         } catch (err) {
             setError('Failed to add discount.');
@@ -74,22 +84,25 @@ const DiscountList = () => {
     return (
         <div>
             <nav>
-                <ul className='navigation'>
-                    <li><a className='active' href="/Home">HOME</a></li>
+                <ul className="navigation">
+                    <li><a className="active" href="/Admin">HOME</a></li>
                     <li><a href="/CartList">QUẢN LÝ KHO</a></li>
                     <li><a href="/UserList">QUẢN LÝ TÀI KHOẢN</a></li>
-                    <li><a href="/DiscountList">NHẬP HÀNG</a></li>
+                    <li><a href="/StockImport">NHẬP HÀNG</a></li>
                     <li><a href="">DOANH THU</a></li>
-                    <li><a href="">QUẢN LÝ MÃ GIẢM GIÁ</a></li>
+                    <li><a href="/DiscountList">QUẢN LÝ MÃ GIẢM GIÁ</a></li>
                 </ul>
             </nav>
             <article>
                 <h1 className="text-2xl font-bold mb-4">Danh sách mã giảm giá</h1>
-                <button onClick={() => setShowForm(!showForm)} className="mb-4 bg-blue-500 bg-black text-white px-4 py-2 rounded">
+                <button
+                    onClick={() => setShowForm(!showForm)}
+                    className="mb-4 bg-blue-500 text-white px-4 py-2 rounded"
+                >
                     {showForm ? 'Cancel' : 'Add Discount'}
                 </button>
                 {showForm && (
-                    <div className="mb-4">
+                    <form onSubmit={handleAddDiscount} className="mb-4">
                         <h2 className="text-lg font-bold">Add New Discount</h2>
                         <input
                             type="text"
@@ -97,6 +110,7 @@ const DiscountList = () => {
                             value={newDiscount.code}
                             onChange={(e) => setNewDiscount({ ...newDiscount, code: e.target.value })}
                             className="border p-2 mr-2"
+                            required
                         />
                         <input
                             type="text"
@@ -104,6 +118,7 @@ const DiscountList = () => {
                             value={newDiscount.description}
                             onChange={(e) => setNewDiscount({ ...newDiscount, description: e.target.value })}
                             className="border p-2 mr-2"
+                            required
                         />
                         <input
                             type="number"
@@ -111,23 +126,26 @@ const DiscountList = () => {
                             value={newDiscount.discountPercentage}
                             onChange={(e) => setNewDiscount({ ...newDiscount, discountPercentage: e.target.value })}
                             className="border p-2 mr-2"
+                            required
                         />
                         <input
                             type="date"
-                            value={newDiscount.start_date}
-                            onChange={(e) => setNewDiscount({ ...newDiscount, start_date: e.target.value })}
+                            value={newDiscount.startDate}
+                            onChange={(e) => setNewDiscount({ ...newDiscount, startDate: e.target.value })}
                             className="border p-2 mr-2"
+                            required
                         />
                         <input
                             type="date"
-                            value={newDiscount.end_date}
-                            onChange={(e) => setNewDiscount({ ...newDiscount, end_date: e.target.value })}
+                            value={newDiscount.endDate}
+                            onChange={(e) => setNewDiscount({ ...newDiscount, endDate: e.target.value })}
                             className="border p-2 mr-2"
+                            required
                         />
-                        <button onClick={handleAddDiscount} className="bg-green-500 bg-black text-white px-4 py-2 rounded">
+                        <button type="submit" className="bg-green-500 text-white px-4 py-2 rounded">
                             Add
                         </button>
-                    </div>
+                    </form>
                 )}
                 <div className="tablee">
                     <table className="table-auto w-full border-collapse border border-gray-300">
@@ -138,7 +156,6 @@ const DiscountList = () => {
                                 <th>Discount Percentage</th>
                                 <th>Start Date</th>
                                 <th>End Date</th>
-                                <th>Created At</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -149,7 +166,6 @@ const DiscountList = () => {
                                     <td>{discount.discountPercentage}%</td>
                                     <td>{new Date(discount.startDate).toLocaleDateString()}</td>
                                     <td>{new Date(discount.endDate).toLocaleDateString()}</td>
-                                    <td>{new Date(discount.createdAt).toLocaleDateString()}</td>
                                 </tr>
                             ))}
                         </tbody>

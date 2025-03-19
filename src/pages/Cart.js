@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-import { data, useNavigate } from 'react-router-dom';
-import ProductItemCart from '../components/ProductItemCart';
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+import ProductItemCart from "../components/ProductItemCart";
 
 const Cart = () => {
     const [cartItems, setCartItems] = useState([]);
@@ -23,7 +23,9 @@ const Cart = () => {
                     headers: { Authorization: `Bearer ${token}` },
                 });
                 setCartItems(data.cart);
-                setTotalPrice(data.cart.reduce((sum, item) => sum + item.product.price * item.quantity, 0));
+                setTotalPrice(
+                    data.cart.reduce((sum, item) => sum + item.product.price * item.quantity, 0)
+                );
             } catch {
                 setStatus({ loading: false, error: "Không thể tải giỏ hàng. Vui lòng thử lại." });
             } finally {
@@ -33,21 +35,26 @@ const Cart = () => {
 
         fetchCartItems();
     }, []);
+
     const handleProductClick = (productId) => {
         navigate(`/product/${productId}`);
     };
+
     const handleRemoveItem = async (productId) => {
         try {
             await axios.delete(`http://localhost:8080/api/cart/remove/${productId}`, {
                 headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
             });
-            localStorage.removeItem(`quantity_${productId}`);
             const updatedItems = cartItems.filter((item) => item.product.id !== productId);
             setCartItems(updatedItems);
             setTotalPrice(updatedItems.reduce((sum, item) => sum + item.product.price * item.quantity, 0));
         } catch {
             alert("Không thể xóa sản phẩm. Vui lòng thử lại.");
         }
+    };
+
+    const handlePlaceOrder = () => {
+        navigate("/CartBill", { state: { totalprice: totalPrice } });
     };
 
     if (status.loading) return <p>Đang tải dữ liệu...</p>;
@@ -57,8 +64,9 @@ const Cart = () => {
         <section className="Cart-pages">
             <div className="containerr">
                 <div className="cart-header">
-                    <h4 style={{ fontWeight: 'bold' }}>Giỏ hàng của bạn</h4>
+                    <h4 style={{ fontWeight: "bold" }}>Giỏ hàng của bạn</h4>
                     <a href="/Sanpham">Tiếp tục mua sắm</a>
+                    <a href="">Lịch sử mua hàng</a>
                 </div>
 
                 <div className="cart-product">
@@ -82,12 +90,18 @@ const Cart = () => {
                 </div>
 
                 <div className="cart-infor">
-                    <p style={{ fontWeight: 'bold', fontSize: '20px' }}>Thông tin đơn hàng</p>
-                    <p style={{ fontWeight: 'bold' }}>
+                    <p style={{ fontWeight: "bold", fontSize: "20px" }}>Thông tin đơn hàng</p>
+                    <p style={{ fontWeight: "bold" }}>
                         <span>Tổng tiền: </span>
-                        <span>{totalPrice.toLocaleString()}<sup>đ</sup></span>
+                        <span>{totalPrice.toLocaleString()} VND</span>
                     </p>
-                    <button className="btn btn-dark ">Đặt hàng</button>
+
+                    <button
+                        className="btn btn-dark"
+                        onClick={handlePlaceOrder}
+                    >
+                        Đặt hàng
+                    </button>
                 </div>
             </div>
         </section>

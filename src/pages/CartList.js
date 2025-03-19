@@ -124,10 +124,10 @@ const CartList = () => {
         <div>
             <nav>
                 <ul className='navigation'>
-                    <li><a className='active'>HOME</a></li>
+                    <li><a className='active' href='/Admin'>HOME</a></li>
                     <li><a href="/CartList">QUẢN LÝ KHO</a></li>
                     <li><a href="/UserList">QUẢN LÝ TÀI KHOẢN</a></li>
-                    <li><a href="">NHẬP HÀNG</a></li>
+                    <li><a href="/StockImport">NHẬP HÀNG</a></li>
                     <li><a href="">DOANH THU</a></li>
                     <li><a href="/DiscountList">QUẢN LÝ MÃ GIẢM GIÁ</a></li>
                 </ul>
@@ -158,6 +158,7 @@ const CartList = () => {
                                 <th>Mô tả</th>
                                 <th>Giá</th>
                                 <th>Danh mục</th>
+                                <th>Số lượng</th>
                                 <th>URL hình ảnh</th>
                                 <th>Ngày tạo</th>
                                 <th>Thao tác</th>
@@ -171,6 +172,7 @@ const CartList = () => {
                                     <td>{product.description}</td>
                                     <td>{product.price}</td>
                                     <td>{product.categoryId?.name}</td>
+                                    <td>{product.stock}</td>
                                     <td><img src={product.imageUrl} alt={product.name} width="50" /></td>
                                     <td>{new Date(product.createdAt).toLocaleDateString()}</td>
                                     <td>

@@ -15,17 +15,19 @@ import ProductDetail from "./components/Item";
 import ShowProduct from "./components/ShowProduct";
 import ProductSearch from "./pages/ProductSearch";
 import Cart from "./pages/Cart";
-import CartList from "./components/CartList";
-import UserList from "./components/UserList";
-import DiscountList from "./components/DiscountList";
-import CartBill from "./components/CartBill";
+import CartList from "./pages/CartList";
+import UserList from "./pages/UserList";
+import DiscountList from "./pages/DiscountList";
+import CartBill from "./pages/CartBill";
 import Blog from "./pages/Blog";
+import StockImport from "./pages/StockImport";
+import OrderHistory from "./pages/OrderHistory";
 
 function AppContent() {
   const location = useLocation();
 
   // Danh sách các đường dẫn cần ẩn Header/Footer
-  const hideHeaderPaths = ["/Admin", "/CartList", "/UserList", "/DiscountList"];
+  const hideHeaderPaths = ["/Admin", "/CartList", "/UserList", "/DiscountList", "/CartBill", "/StockImport"];
 
   return (
     <>
@@ -42,6 +44,8 @@ function AppContent() {
           <Route path="/Blog" element={<Blog />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/Cart" element={<Cart />} />
+          <Route path="/OrderHistory" element={<OrderHistory />} />
+          <Route path="/CartBill" element={<CartBill />} />
           <Route path="/ProductSearch" element={<ProductSearch />} />
           <Route path="/ShowProduct" element={<ShowProduct />} />
           <Route path="/Product/:id" element={<ProductDetail />} />
@@ -76,6 +80,14 @@ function AppContent() {
             element={
               <ProtectedRoute adminOnly={true}>
                 <DiscountList />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/StockImport"
+            element={
+              <ProtectedRoute adminOnly={true}>
+                <StockImport />
               </ProtectedRoute>
             }
           />

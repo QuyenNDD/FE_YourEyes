@@ -1,6 +1,7 @@
 import { useNavigate, Link } from "react-router-dom";
 import styled from "styled-components";
 import { useState, useEffect } from "react";
+import axios from "axios";
 
 
 
@@ -8,11 +9,28 @@ const Header = () => {
   const navigate = useNavigate();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [activeMenu, setActiveMenu] = useState("");
+  const [cartItems, setCartItems] = useState([]);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
     setIsAuthenticated(!!token);
   }, []);
+
+  useEffect(() => {
+    const fetchCartItems = async () => {
+        const token = localStorage.getItem("token");
+
+        try {
+            const { data } = await axios.get("http://localhost:8080/api/cart", {
+                headers: { Authorization: `Bearer ${token}` },
+            });
+            setCartItems(data.cart);
+        } catch {
+        }
+    };
+
+    fetchCartItems();
+}, []);
   const handleAuth = () => {
     if (isAuthenticated) {
       localStorage.removeItem("token");
@@ -52,7 +70,7 @@ const Header = () => {
                 <Link to="/Cart">
                   <div className="cart-icon">
                     <i className="fas fa-shopping-cart"></i>
-                    <div className="badge">0</div>
+                    <div className="badge">{cartItems.length}</div>
                   </div>
                 </Link>
               </li>

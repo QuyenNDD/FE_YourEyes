@@ -1,7 +1,6 @@
 .App {
   text-align: center;
 }
-
 body {
   font-family: "Oswald";
   background: #f4f4f4;
@@ -44,10 +43,10 @@ a {
   max-width: 1000px;
   margin: auto;
 }
-.containerrr{
+/* .containerrr{
   max-width: 700px;
   margin: auto;
-}
+} */
 li {
   list-style: none;
 }
@@ -605,6 +604,11 @@ li{
 
 
 /* ---------------------------------------PAGES-ADMIN-------------------------------------------- */
+/* Quay lai pages Home */
+.Admin-return {
+  font-size: 30px;
+}
+/* NAVIGATION BAR */
 nav {
   background-color: #343a40;
   float: left;
@@ -612,46 +616,202 @@ nav {
   padding: 20px;
   height: 100vh;
   position: fixed;
-  background-attachment: fixed;
   overflow-y: auto;
 }
 
 nav .navigation {
   list-style-type: none;
-  padding-left: 19px;
-  margin-top: 150px;
-  margin-bottom: 100px;
+  padding-left: 0;
+  margin-top: 20px;
   font-size: 19px;
-  overflow-y: auto;
-} 
+}
+
 nav .navigation li {
-  display: block;
   border-bottom: 1px solid #fff;
 }
+
 nav .navigation li a {
-  padding: 9px 0;
+  padding: 10px 0;
   display: block;
   cursor: pointer;
   color: aliceblue;
   text-decoration: none;
 }
-nav .navigation li a.active{
+
+nav .navigation li a.active {
   color: #80db66;
 }
-.navigation li a:hover{
+
+nav .navigation li a:hover {
   color: #80db66;
 }
+
+
+/* MAIN ARTICLE */
 article {
   margin-left: 20%;
   float: left;
-  width: 77.35%;
-  height: 100vh;
-  background-repeat: repeat;
+  width: 80%;
+  min-height: 100vh;
   position: relative;
-  padding: 10px 20px;
+  padding: 20px;
+  background-color: #cbc5c5;
 }
+/* Breadcrumb Menubar */
+.acticle-menubar {
+  position: fixed;
+  top: 0;
+  left: 20%; /* Align next to the sidebar */
+  width: 80%; /* Cover the remaining width */
+  background-color: #f8f9fa; /* Light background */
+  color: #333; /* Text color */
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+  font-size: 14px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+  z-index: 1000; /* Keep it above other content */
+}
+
+.acticle-menubar ul {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.acticle-menubar li {
+  margin-right: 10px; /* Space between breadcrumb items */
+}
+
+.acticle-menubar li a {
+  text-decoration: none;
+  color: #007bff; /* Link color */
+  transition: color 0.3s ease; /* Smooth hover effect */
+}
+.acticle-menubar li::after {
+  content: "/"; /* Dấu phân cách giữa các mục */
+  margin-left: 10px;
+  color: #6c757d; /* Màu xám nhạt cho dấu phân cách */
+}
+
+.acticle-menubar li:last-child::after {
+  content: ""; /* Bỏ dấu phân cách ở mục cuối cùng */
+}
+/* ADMIN MENUBAR */
+.admin-menubar {
+  display: flex;
+  flex-wrap: wrap; /* Cho phép các phần tử xuống dòng nếu không đủ không gian */
+  gap: 40px; /* Khoảng cách giữa các phần tử */
+  justify-content: center;
+  margin-top: 50px;
+  padding: 0 10px;
+}
+
+.admin-menubar ul {
+  display: flex;
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+.admin-menubar li {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 15px 20px;
+  font-size: 18px;
+  color: #333;
+  min-width: 160px;
+  margin: 0px 88px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+.admin-menubar li:nth-child(1){
+  background-color: #007bff;
+}
+.admin-menubar li:nth-child(2){
+  background-color: #5f80a3;
+}
+.admin-menubar li:nth-child(3){
+  background-color: #6c9d22;
+}
+.admin-menubar li:nth-child(4){
+  background-color: #ff1500;
+}
+
+.admin-menubar li:hover {
+  background-color: #eef;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+
+/* ADMIN CONTENT */
+.admin-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: flex-start;
+  margin-top: 50px;
+  
+}
+
 /* --------------------------------------CartBill----------------------------------------- */
+
+.containerrr {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh; /* Đảm bảo chiếm toàn bộ chiều cao màn hình */
+  
+  padding: 20px;
+  background-image: url("/public/backrough_bill.jpg");
+}
+
+.Bill-container {
+  background: #ffffff; /* Nền trắng cho hộp nội dung */
+  border-radius: 8px; /* Bo góc */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Đổ bóng nhẹ */
+  padding: 20px;
+  width: 90%; /* Độ rộng hộp */
+  max-width: 600px; /* Độ rộng tối đa */
+}
+
 .Billheader {
   display: flex;
   justify-content: center;
+  margin-bottom: 20px;
+}
+
+.Bill-Content {
+  display: flex;
+  flex-direction: column;
+  gap: 15px; /* Khoảng cách giữa các phần */
+}
+
+.Bill-Button {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.Bill-Button .btn {
+  padding: 10px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  background-color: #000;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.Bill-Button .btn:hover {
+  background-color: #444;
 }
