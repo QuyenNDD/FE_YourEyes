@@ -815,3 +815,13 @@ article {
 .Bill-Button .btn:hover {
   background-color: #444;
 }
+
+/* ---------------------------------------OrderHistory---------------------- */
+.order-history-list {
+  padding: 20px 0px;
+}
+.order-item{
+  background-color: #b0aeae;
+  border: 1px solid #000;
+  margin: 10px 0px;
+}

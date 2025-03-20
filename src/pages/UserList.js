@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import MenuBar from "../components/MenuBar";
 
 const UserList = () => {
     const [users, setUsers] = useState([]);
@@ -43,16 +44,7 @@ const UserList = () => {
 
     return (
         <div>
-            <nav>
-                <ul className='navigation'>
-                    <li><a className='active' href="/Admin">HOME</a></li>
-                    <li><a href="/CartList">QUẢN LÝ KHO</a></li>
-                    <li><a href="/UserList">QUẢN LÝ TÀI KHOẢN</a></li>
-                    <li><a href="/StockImport">NHẬP HÀNG</a></li>
-                    <li><a href="">DOANH THU</a></li>
-                    <li><a href="/DiscountList">QUẢN LÝ MÃ GIẢM GIÁ</a></li>
-                </ul>
-            </nav>
+            <MenuBar />
             <article>
                 <div className="tablee">
                     <h1 className="text-2xl font-bold mb-4">Danh sách người dùng</h1>

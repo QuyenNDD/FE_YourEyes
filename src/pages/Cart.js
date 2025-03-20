@@ -66,7 +66,7 @@ const Cart = () => {
                 <div className="cart-header">
                     <h4 style={{ fontWeight: "bold" }}>Giỏ hàng của bạn</h4>
                     <a href="/Sanpham">Tiếp tục mua sắm</a>
-                    <a href="">Lịch sử mua hàng</a>
+                    <a href="/OrderHistory">Lịch sử mua hàng</a>
                 </div>
 
                 <div className="cart-product">
