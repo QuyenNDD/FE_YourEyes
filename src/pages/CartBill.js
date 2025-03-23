@@ -39,6 +39,7 @@ const CartBill = () => {
         const discount = discountCodes.find((d) => d.code === selectedCode);
         if (discount) {
             setDiscountPercentage(discount.discountPercentage);
+            console.log(selectedDiscount);
             const discountAmount = (initialTotalPrice * discount.discountPercentage) / 100;
             setFinalTotal(initialTotalPrice - discountAmount);
         } else {
@@ -50,13 +51,14 @@ const CartBill = () => {
     const handlePlaceOrder = async () => {
         setPlacingOrder(true); // Bắt đầu xử lý
         try {
+            const formData = new FormData();
+            formData.append("discountCode", selectedDiscount);
             const response = await fetch("http://localhost:8080/api/order/place", {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application/json",
                     Authorization: `Bearer ${localStorage.getItem("token")}`,
                 },
-                body: JSON.stringify({ discountCode: selectedDiscount }),
+                body: formData,
             });
 
             if (!response.ok) {

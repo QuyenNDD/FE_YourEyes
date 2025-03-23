@@ -24,12 +24,13 @@ import StockImport from "./pages/StockImport";
 import OrderHistory from "./pages/OrderHistory";
 import MenuBar from "./components/MenuBar";
 import OrderStatus from "./pages/OrderStatus";
+import RevenueAnalytics from "./pages/RevenueAnalytics";
 
 function AppContent() {
   const location = useLocation();
 
   // Danh sách các đường dẫn cần ẩn Header/Footer
-  const hideHeaderPaths = ["/Admin", "/CartList", "/UserList", "/DiscountList", "/CartBill", "/StockImport", "/OrderStatus"];
+  const hideHeaderPaths = ["/Admin", "/CartList", "/UserList", "/DiscountList", "/CartBill", "/StockImport", "/OrderStatus", "/RevenueAnalytics"];
 
   return (
     <>
@@ -98,6 +99,14 @@ function AppContent() {
             element={
               <ProtectedRoute adminOnly={true}>
                 <OrderStatus />
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="RevenueAnalytics"
+            element={
+              <ProtectedRoute adminOnly={true}>
+                <RevenueAnalytics />
               </ProtectedRoute>
             }
           />
