@@ -23,10 +23,10 @@ const RevenueAnalytics = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  // Hàm gọi API để lấy dữ liệu
-  useEffect(() => {
-    console.log("Chart Data sau khi set:", chartData);
-  }, [chartData]);
+  // // Hàm gọi API để lấy dữ liệu
+  // useEffect(() => {
+  //   console.log("Chart Data sau khi set:", chartData);
+  // }, [chartData]);
   useEffect(() => {
     console.log("Fetch dữ liệu cho năm:", selectedYear);
     fetchRevenueData(selectedYear);
@@ -65,12 +65,7 @@ const RevenueAnalytics = () => {
         return monthData ? monthData.totalRenenue : 0;
       });
 
-      console.log("Filtered Data:", filteredData);
-      console.log("Full Data:", fullData);
-      console.log("Chart Data:", chartData);
-      const labels = Array.from({ length: 12 }, (_, index) => `Tháng ${index + 1}`)
-      console.log("Lables",labels)
-
+      //Tao dữ liệu cho biểu đồ
       const updatedChartData = {
         labels: Array.from({ length: 12 }, (_, index) => `Tháng ${index + 1}`),
         datasets: [
@@ -84,9 +79,7 @@ const RevenueAnalytics = () => {
         ],
       };
 
-      console.log("Dữ liệu sắp được set:", updatedChartData);
       setChartData(updatedChartData);
-      console.log("Sau khi set", chartData);
     } catch (error) {
       setError(error.message);
       console.error("Lỗi khi gọi API:", error);
@@ -97,7 +90,7 @@ const RevenueAnalytics = () => {
 
   useEffect(() => {
     const currentYear = new Date().getFullYear();
-    setYears([currentYear, currentYear + 1]);
+    setYears([currentYear, currentYear -1]);
   }, []);
 
   useEffect(() => {
@@ -108,10 +101,10 @@ const RevenueAnalytics = () => {
     <div>
       <MenuBar />
       <article className="p-4">
-        <h2 className="text-xl font-bold mb-4">Doanh thu</h2>
-        <div className="bg-white shadow-md p-4 rounded-lg">
+        <h2 >Doanh thu</h2>
+        <div className="Chart-Revenu">
           <div className="mb-4">
-            <label htmlFor="year" className="mr-2 font-semibold">
+            <label htmlFor="year" className="Year-Revenu">
               Chọn năm:
             </label>
             <select

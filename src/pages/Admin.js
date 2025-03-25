@@ -1,5 +1,9 @@
 import React from "react";
 import MenuBar from "../components/MenuBar";
+import TotalProducts from "../components/TotalProducts";
+import TotalDiscounts from "../components/TotalDiscounts";
+import RevenuesComponent from "../components/RevenuesComponent";
+import TotalOrders from "../components/TotalOrders";
 
 const Admin = () => {
 
@@ -22,7 +26,7 @@ const Admin = () => {
                   <div class="d-flex justify-content-between">
                     <div>
                       <p class="text-sm mb-0 text-capitalize">Today's Money</p>
-                      <h4 class="mb-0">$53k</h4>
+                      <h4 class="mb-0">< RevenuesComponent /></h4>
                     </div>
                     <div >
                       <i style={{ fontSize: "30px" }} class="fa-solid fa-calendar-week"></i>
@@ -40,8 +44,8 @@ const Admin = () => {
                 <div class="card-header p-2 ps-3">
                   <div class="d-flex justify-content-between">
                     <div>
-                      <p class="text-sm mb-0 text-capitalize">Today's Users</p>
-                      <h4 class="mb-0">2300</h4>
+                      <p class="text-sm mb-0 text-capitalize">Total Product</p>
+                      <h4 class="mb-0"><TotalProducts /></h4>
                     </div>
                     <div >
                       <i style={{ fontSize: "30px" }} class="fa-solid fa-user"></i>
@@ -60,8 +64,8 @@ const Admin = () => {
                 <div class="card-header p-2 ps-3">
                   <div class="d-flex justify-content-between">
                     <div>
-                      <p class="text-sm mb-0 text-capitalize">Ads Views</p>
-                      <h4 class="mb-0">3,462</h4>
+                      <p class="text-sm mb-0 text-capitalize">Orders List</p>
+                      <h4 class="mb-0"><TotalOrders /></h4>
                     </div>
                     <div >
                       <i style={{ fontSize: "30px" }} class="fa-solid fa-chart-simple"></i>
@@ -79,8 +83,8 @@ const Admin = () => {
                 <div class="card-header p-2 ps-3">
                   <div class="d-flex justify-content-between">
                     <div>
-                      <p class="text-sm mb-0 text-capitalize">Sales</p>
-                      <h4 class="mb-0">$103,430</h4>
+                      <p class="text-sm mb-0 text-capitalize">Total Discounts</p>
+                      <h4 class="mb-0"><TotalDiscounts /></h4>
                     </div>
                     <div >
                       <i style={{ fontSize: "30px" }} class="fa-solid fa-bag-shopping"></i>

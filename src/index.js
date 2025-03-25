@@ -5,6 +5,10 @@ import App from "./App";
 
 import { Provider } from "react-redux";
 import catsReducer from "./redux/slices/catSlice";
+import productReducer from "./redux/slices/productsSlice";
+import discountsReducer from "./redux/slices/discountsSlice";
+import revenuesReducer from "./redux/slices/revenuesSlice";
+import ordersReducer from './redux/slices/orderSlice';
 import catSaga from "./redux/sagas/catSaga";
 import createSagaMiddleware from "redux-saga";
 import { configureStore } from "@reduxjs/toolkit";
@@ -18,6 +22,10 @@ const saga = createSagaMiddleware();
 const store = configureStore({
   reducer: {
     cats: catsReducer,
+    products: productReducer,
+    discounts: discountsReducer,
+    revenues: revenuesReducer,
+    orders: ordersReducer,
   },
   middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(saga), // sử dụng function
 });
@@ -117,7 +125,6 @@ root.render(
   <React.StrictMode>
     <Provider store={store}>
       <App />
-      {/* <SliderController /> */}
     </Provider>
   </React.StrictMode>
 );

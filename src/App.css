@@ -730,3 +730,11 @@ article {
   border-top: 1px solid #333;
   margin: 0.5rem 0;
 }
+/* --------------------------------------RevenueAnalytics------------------------- */
+.Chart-Revenu {
+  background-color: #ffffff;
+  border-radius: 5px;
+}
+.Year-Revenu{
+  padding-right: 5px;
+}
