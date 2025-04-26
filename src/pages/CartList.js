@@ -167,9 +167,9 @@ const CartList = () => {
                                     <td>{product.stock}</td>
                                     <td><img src={product.imageUrl} alt={product.name} width="50" /></td>
                                     <td>{new Date(product.createdAt).toLocaleDateString()}</td>
-                                    <td>
-                                        <button onClick={() => handleEdit(product)}>Sửa</button>
-                                        <button onClick={() => handleDelete(product.id)}>Xóa</button>
+                                    <td className='buttons'>
+                                        <button onClick={() => handleEdit(product)} className='button-cartlist'>Sửa</button>
+                                        <button onClick={() => handleDelete(product.id)} className='button-cartlist'>Xóa</button>
                                     </td>
                                 </tr>
                             ))}

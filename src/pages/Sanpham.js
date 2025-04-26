@@ -4,65 +4,81 @@ import ProductList from '../components/DanhSachSanPham';
 const Sanpham = () => {
     const [productCount, setProductCount] = useState(0);
     const [products, setProducts] = useState([]);
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [selectedCategory, setSelectedCategory] = useState(null);
+    const [page, setPage] = useState(0);
+    const [hasMore, setHasMore] = useState(true);
 
+    const pageSize = 10; // Số sản phẩm tải mỗi lần
     const categories = [
         { id: 1, name: 'Dior' },
         { id: 2, name: 'Chopard' },
         { id: 3, name: 'Cartier' },
     ];
 
-    useEffect(() => {
-        const fetchProducts = async () => {
-            setLoading(true); // Hiển thị trạng thái đang tải
-            try {
-                const response = await fetch('http://localhost:8080/api/products/getAll');
-                if (!response.ok) {
-                    throw new Error('Lỗi khi gọi API');
-                }
-                const data = await response.json();
+    const fetchProducts = async (pageNumber, category = null, reset = false) => {
+        setLoading(true);
+        setError(null);
 
-                // Lưu danh sách sản phẩm vào state
-                if (Array.isArray(data.content)) {
-                    setProducts(data.content);
-                    // setProductCount(data.totalElements) // Dữ liệu sản phẩm
-                } else {
-                    throw new Error('Dữ liệu không hợp lệ');
-                }
-            } catch (error) {
-                setError(error); // Lưu lỗi
-            } finally {
-                setLoading(false); // Kết thúc trạng thái tải
+        try {
+            const categoryFilter = category ? `&categoryId=${category}` : '';
+            const response = await fetch(
+                `http://localhost:8080/api/products/getAll?page=${pageNumber}&size=${pageSize}${categoryFilter}`
+            );
+
+            if (!response.ok) {
+                throw new Error('Lỗi khi gọi API');
             }
-        };
 
-        fetchProducts(); // Gọi hàm
-    }, []);
-    const filteredProducts = selectedCategory
-        ? products.filter(product => product.categoryId?.id === selectedCategory)
-        : products;
+            const data = await response.json();
+
+            if (Array.isArray(data.content)) {
+                const filteredProducts = category
+                    ? data.content.filter((product) => product.categoryId?.id === category)
+                    : data.content;
+
+                setProducts((prevProducts) =>
+                    reset ? filteredProducts : [...prevProducts, ...filteredProducts]
+                );
+
+                setHasMore(!data.last);
+                setProductCount(data.totalElements);
+            } else {
+                throw new Error('Dữ liệu không hợp lệ');
+            }
+        } catch (err) {
+            setError(err);
+        } finally {
+            setLoading(false);
+        }
+    };
+
+
 
     useEffect(() => {
-        if (selectedCategory) {
-            setProductCount(filteredProducts.length); // Đếm số lượng sản phẩm đã lọc
-        } else {
-            setProductCount(products.length); // Hiển thị tổng số nếu không lọc
-        }
-    }, [filteredProducts, selectedCategory]);
+        fetchProducts(0, selectedCategory, true); // Tải dữ liệu lần đầu
+    }, [selectedCategory]);
 
     const handleCategoryChange = (categoryId) => {
         setSelectedCategory(categoryId);
+        setProducts([]); // Reset sản phẩm hiện tại
+        setPage(0); // Reset trang
+        fetchProducts(0, categoryId, true); // Gọi API với danh mục mới
     };
+
 
     const handleShowAllProducts = () => {
         setSelectedCategory(null);
+        setProducts([]);
+        setPage(0);
     };
 
-    if (loading) {
-        return <p>Đang tải sản phẩm...</p>;
-    }
+    const loadMoreProducts = () => {
+        const nextPage = page + 1;
+        setPage(nextPage);
+        fetchProducts(nextPage, selectedCategory); // Tải thêm sản phẩm
+    };
 
     if (error) {
         return <p>Có lỗi xảy ra khi lấy dữ liệu: {error.message}</p>;
@@ -85,8 +101,7 @@ const Sanpham = () => {
                     {categories.map((category) => (
                         <li key={category.id}>
                             <button
-                                className={`btn btn-outline-secondary ${selectedCategory === category.id ? 'active' : ''
-                                    }`}
+                                className={`btn btn-outline-secondary ${selectedCategory === category.id ? 'active' : ''}`}
                                 type="button"
                                 onClick={() => handleCategoryChange(category.id)}
                             >
@@ -106,7 +121,18 @@ const Sanpham = () => {
                     </li>
                 </div>
             </div>
-            <ProductList products={filteredProducts} />
+            <ProductList products={products} />
+            {hasMore && (
+                <div className="load-more-container">
+                    <button
+                        className="btn btn-primary load-more-button"
+                        onClick={loadMoreProducts}
+                        disabled={loading}
+                    >
+                        {loading ? 'Đang tải...' : 'Tải thêm'}
+                    </button>
+                </div>
+            )}
         </div>
     );
 };

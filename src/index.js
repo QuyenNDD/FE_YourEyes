@@ -119,7 +119,7 @@ export function SliderController({ intervalTime = 3000, maxSlides = 4 }) {
 
   return null; // Không render gì vì HTML đã có sẵn
 }
-const root = ReactDOM.createRoot(document.getElementById("root")); // ✅ Tạo root container
+const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
   <React.StrictMode>

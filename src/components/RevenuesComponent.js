@@ -18,15 +18,20 @@ const RevenuesComponent = () => {
     const formatPrice = (price) => {
         if (typeof price !== 'number') return '';
         return price.toLocaleString('vi-VN');
-      };
+    };
+
+    // Lấy doanh thu mới nhất
+    const latestRevenue = revenues.length > 0 ? revenues[revenues.length-1] : null;
 
     return (
         <div>
-            {revenues.map((revenue) => (
-                <div key={revenue.id}>
-                    {formatPrice(revenue.totalRenenue)} <span>VND</span>
+            {latestRevenue ? (
+                <div>
+                    {formatPrice(latestRevenue.totalRenenue)} <span>VND</span>
                 </div>
-            ))}
+            ) : (
+                <div>Không có dữ liệu doanh thu.</div>
+            )}
         </div>
     );
 };

@@ -1,15 +1,13 @@
 import { useNavigate, Link } from "react-router-dom";
-import styled from "styled-components";
 import { useState, useEffect } from "react";
 import axios from "axios";
-
-
 
 const Header = () => {
   const navigate = useNavigate();
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [activeMenu, setActiveMenu] = useState("");
   const [cartItems, setCartItems] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -18,60 +16,124 @@ const Header = () => {
 
   useEffect(() => {
     const fetchCartItems = async () => {
-        const token = localStorage.getItem("token");
+      const token = localStorage.getItem("token");
 
-        try {
-            const { data } = await axios.get("http://localhost:8080/api/cart", {
-                headers: { Authorization: `Bearer ${token}` },
-            });
-            setCartItems(data.cart);
-        } catch {
-        }
+      try {
+        const { data } = await axios.get("http://localhost:8080/api/cart", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setCartItems(data.cart);
+      } catch {
+        // Xử lý lỗi tạm thời
+      }
     };
 
     fetchCartItems();
-}, []);
+  }, []);
+
   const handleAuth = () => {
     if (isAuthenticated) {
       localStorage.removeItem("token");
       setIsAuthenticated(false);
-      alert('Bạn đã đăng xuất thành công!');
-      navigate('/login');
+      alert("Bạn đã đăng xuất thành công!");
+      navigate("/login");
     } else {
       navigate("/login");
     }
   };
 
+  const handleSearch = (event) => {
+    event.preventDefault();
+    if (searchQuery.trim()) {
+      localStorage.setItem("searchQuery", searchQuery); // Lưu thông tin tìm kiếm
+      navigate("/ProductSearch"); // Điều hướng đến trang tìm kiếm
+    }
+  };
+
   return (
-    <section className='menu'>
+    <section className="menu">
       <div className="containerr">
         <div className="menu-text">
           <div className="menu-logo">
-            <h2><Link to="/">StyleHub</Link></h2>
+            <h2>
+              <Link to="/">StyleHub</Link>
+            </h2>
           </div>
           <div className="menu-content">
             <ul>
-              <li><Link to="/Home" className={activeMenu === "Home" ? "active" : ""}
-                onClick={() => setActiveMenu("Home")}>Trang chủ</Link></li>
-              <li><Link to="/Sanpham" className={activeMenu === "Sanpham" ? "active" : ""}
-                onClick={() => setActiveMenu("Sanpham")}>Sản phẩm</Link></li>
-              <li><Link to="/Blog" className={activeMenu === "Blog" ? "active" : ""}
-                onClick={() => setActiveMenu("Blog")}>Blog</Link></li>
-              <li><Link to="/About" className={activeMenu === "About" ? "active" : ""}
-                onClick={() => setActiveMenu("About")}>Giới thiệu</Link></li>
-              <li><Link to="/Contact" className={activeMenu === "Contact" ? "active" : ""}
-                onClick={() => setActiveMenu("Contact")}>Liên hệ</Link></li>
+              <li>
+                <Link
+                  to="/Home"
+                  className={activeMenu === "Home" ? "active" : ""}
+                  onClick={() => setActiveMenu("Home")}
+                >
+                  Trang chủ
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/Sanpham"
+                  className={activeMenu === "Sanpham" ? "active" : ""}
+                  onClick={() => setActiveMenu("Sanpham")}
+                >
+                  Sản phẩm
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/Blog"
+                  className={activeMenu === "Blog" ? "active" : ""}
+                  onClick={() => setActiveMenu("Blog")}
+                >
+                  Blog
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/About"
+                  className={activeMenu === "About" ? "active" : ""}
+                  onClick={() => setActiveMenu("About")}
+                >
+                  Giới thiệu
+                </Link>
+              </li>
+              <li>
+                <Link
+                  to="/Contact"
+                  className={activeMenu === "Contact" ? "active" : ""}
+                  onClick={() => setActiveMenu("Contact")}
+                >
+                  Liên hệ
+                </Link>
+              </li>
             </ul>
           </div>
           <div className="menu-customer">
             <ul>
-              <li><Link to="/ProductSearch"><i className="fa-solid fa-magnifying-glass"></i></Link></li>
+              <li>
+                <form onSubmit={handleSearch} className="search-form">
+                  <input
+                    type="text"
+                    value={searchQuery}
+                    onChange={(e) => setSearchQuery(e.target.value)}
+                    placeholder="Tìm kiếm sản phẩm..."
+                    className="search-input"
+                  />
+                  <button type="submit" className="search-button">
+                    <i className="fa-solid fa-magnifying-glass"></i>
+                  </button>
+                </form></li>
               <li>
                 <Link to="/Cart">
                   <div className="cart-icon">
                     <i className="fas fa-shopping-cart"></i>
                     <div className="badge">{cartItems.length}</div>
                   </div>
+                </Link>
+              </li>
+              <li>
+                <Link to="/Profile">
+                  <i className="fa-regular fa-user"></i>
                 </Link>
               </li>
               <li>

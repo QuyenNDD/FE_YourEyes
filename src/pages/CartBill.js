@@ -4,6 +4,8 @@ import { useLocation, useNavigate } from "react-router-dom";
 const CartBill = () => {
     const location = useLocation();
     const navigate = useNavigate();
+    const { cartItems: initialCartItems } = location.state || {};
+    const [cartItems, setCartItems] = useState(initialCartItems || []);
     const initialTotalPrice = location.state?.totalprice || 0; // Nhận tổng số tiền từ state
     const [discountCodes, setDiscountCodes] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -12,6 +14,9 @@ const CartBill = () => {
     const [discountPercentage, setDiscountPercentage] = useState(0);
     const [finalTotal, setFinalTotal] = useState(initialTotalPrice);
     const [placingOrder, setPlacingOrder] = useState(false); // Trạng thái xử lý đặt hàng
+
+    console.log(cartItems)
+
 
     useEffect(() => {
         const fetchDiscountCodes = async () => {
@@ -67,7 +72,7 @@ const CartBill = () => {
 
             const data = await response.json();
             alert("Đơn hàng đã được đặt thành công!");
-            navigate("/SanPham", { state: { order: data } }); // Điều hướng đến trang xác nhận
+            navigate("/Cart", { state: { order: data } }); // Điều hướng đến trang xác nhận
         } catch (err) {
             alert(err.message || "Đã xảy ra lỗi. Vui lòng thử lại.");
         } finally {
@@ -85,12 +90,48 @@ const CartBill = () => {
 
     return (
         <div className="containerrr">
+            <div className="Header">
+                <p>THANH TOÁN</p>
+            </div>
             <div className="Bill-container">
                 <div className="Billheader">
-                    <h1>ĐƠN HÀNG</h1>
+                    <p>ĐƠN HÀNG</p>
+                </div>
+                <div className="Bill-Products">
+                    <h4>Sản phẩm</h4>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Tên</th>
+                                <th>Số lượng</th>
+                                <th>Đơn giá</th>
+                                <th>Thành tiền</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {cartItems.length > 0 ? (
+                                cartItems.map((item) => (
+                                    <tr key={item.product.id} className="product-item">
+                                        <td className="product-info">
+                                            <img src={item.product.imageUrl} alt={item.product.name} className="product-image" />
+                                            <span className="product-name">{item.product.name}</span>
+                                        </td>
+                                        <td>{item.quantity}</td>
+                                        <td>{item.product.price.toLocaleString("vi-VN")} VND</td>
+                                        <td>{(item.product.price * item.quantity).toLocaleString("vi-VN")} VND</td>
+                                    </tr>
+                                ))
+                            ) : (
+                                <tr>
+                                    <td colSpan="4" style={{ textAlign: "center" }}>Không có sản phẩm nào.</td>
+                                </tr>
+                            )}
+                        </tbody>
+                    </table>
+
                 </div>
                 <div className="Bill-Content">
-                    <h2>Chọn mã giảm giá:</h2>
+                    <h4>Mã giảm giá:</h4>
                     {discountCodes.length > 0 ? (
                         <select
                             value={selectedDiscount}

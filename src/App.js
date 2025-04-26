@@ -22,15 +22,15 @@ import CartBill from "./pages/CartBill";
 import Blog from "./pages/Blog";
 import StockImport from "./pages/StockImport";
 import OrderHistory from "./pages/OrderHistory";
-import MenuBar from "./components/MenuBar";
 import OrderStatus from "./pages/OrderStatus";
 import RevenueAnalytics from "./pages/RevenueAnalytics";
-
+import ForgotPassword from "./pages/ForgotPassword";
+import Profile from "./pages/Profile";
 function AppContent() {
   const location = useLocation();
 
   // Danh sách các đường dẫn cần ẩn Header/Footer
-  const hideHeaderPaths = ["/Admin", "/CartList", "/UserList", "/DiscountList", "/CartBill", "/StockImport", "/OrderStatus", "/RevenueAnalytics"];
+  const hideHeaderPaths = ["/Admin", "/CartList", "/UserList", "/DiscountList", "/StockImport", "/OrderStatus", "/RevenueAnalytics"];
 
   return (
     <>
@@ -42,14 +42,16 @@ function AppContent() {
           <Route path="/home" element={<Home />} />
           <Route path="/Sanpham" element={<Sanpham />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
           <Route path="/register" element={<Register />} />
           <Route path="/about" element={<About />} />
           <Route path="/Blog" element={<Blog />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/Profile" element={<Profile />} />
           <Route path="/Cart" element={<Cart />} />
           <Route path="/OrderHistory" element={<OrderHistory />} />
           <Route path="/CartBill" element={<CartBill />} />
-          <Route path="/ProductSearch" element={<ProductSearch />} />
+          <Route path="/ProductSearch" element={<ProductSearch />} />s
           <Route path="/ShowProduct" element={<ShowProduct />} />
           <Route path="/Product/:id" element={<ProductDetail />} />
 

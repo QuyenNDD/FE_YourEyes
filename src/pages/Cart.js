@@ -9,6 +9,8 @@ const Cart = () => {
     const [status, setStatus] = useState({ loading: true, error: "" });
     const navigate = useNavigate();
 
+    
+
     useEffect(() => {
         const fetchCartItems = async () => {
             const token = localStorage.getItem("token");
@@ -48,13 +50,19 @@ const Cart = () => {
             const updatedItems = cartItems.filter((item) => item.product.id !== productId);
             setCartItems(updatedItems);
             setTotalPrice(updatedItems.reduce((sum, item) => sum + item.product.price * item.quantity, 0));
+            window.location.reload(); // Reload trang
         } catch {
             alert("Không thể xóa sản phẩm. Vui lòng thử lại.");
         }
     };
 
     const handlePlaceOrder = () => {
-        navigate("/CartBill", { state: { totalprice: totalPrice } });
+        if (totalPrice === 0) {
+            alert("Không có sản phẩm trong giỏ hàng. Vui lòng thêm sản phẩm vào giỏ hàng.");
+            navigate("/SanPham"); // Điều hướng đến trang sản phẩm
+        } else {
+            navigate("/CartBill", { state: { totalprice: totalPrice, cartItems: cartItems } });
+        }
     };
 
     if (status.loading) return <p>Đang tải dữ liệu...</p>;

@@ -89,7 +89,9 @@ const DiscountList = () => {
                 <h1 className="text-2xl font-bold mb-4">Danh sách mã giảm giá</h1>
                 <button
                     onClick={() => setShowForm(!showForm)}
-                    className="mb-4 bg-blue-500 text-white px-4 py-2 rounded"
+                    style={{ backgroundColor: '#9d4bff' }}
+                    className="mb-4 text-white px-4 py-2 rounded"
+                
                 >
                     {showForm ? 'Cancel' : 'Add Discount'}
                 </button>
@@ -134,7 +136,7 @@ const DiscountList = () => {
                             className="border p-2 mr-2"
                             required
                         />
-                        <button type="submit" className="bg-green-500 text-white px-4 py-2 rounded">
+                        <button type="submit" style={{ backgroundColor: '#28a745' }} className=" text-white px-4 py-2 rounded">
                             Add
                         </button>
                     </form>

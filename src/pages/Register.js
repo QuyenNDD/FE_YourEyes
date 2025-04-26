@@ -13,13 +13,43 @@ export default function Register() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState('');
 
+
+  const validateForm = () => {
+    // Kiểm tra định dạng email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      alert('Email không hợp lệ.');
+      return false;
+    }
+
+    // Kiểm tra mật khẩu
+    const passwordRegex = /^(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).+$/;
+    if (password.length < 6 || !passwordRegex.test(password)) {
+      alert('Mật khẩu phải có ít nhất 6 ký tự và có kí tự đặc biệt.');
+      return false;
+    }
+
+    // Kiểm tra số điện thoại
+    const phoneRegex = /^[0-9]{10}$/;
+    if (!phoneRegex.test(phone)) {
+      alert('Số điện thoại phải là 10 chữ số.');
+      return false;
+    }
+
+    // Kiểm tra mật khẩu xác nhận
+    if (password !== confirmPassword) {
+      alert('Mật khẩu không khớp.');
+      return false;
+    }
+
+    return true;
+  };
   const handleSignup = async (e) => {
     e.preventDefault();
     setError('');
 
-    if (password !== confirmPassword) {
-      setError('Mật khẩu không khớp');
-      return;
+    if (!validateForm()) {
+      return; // Dừng lại nếu form không hợp lệ
     }
 
     try {

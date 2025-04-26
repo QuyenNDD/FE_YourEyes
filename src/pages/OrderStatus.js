@@ -95,27 +95,27 @@ const OrderStatus = () => {
                                     </td>
                                     <td>
                                         {/* Nút để cập nhật trạng thái */}
-                                        <button
+                                        <button className='button-cartlist'
                                             onClick={() => updateOrderStatus(order.id, "PENDING")}
                                         >
                                             Dang đặt hàng
                                         </button>
-                                        <button
+                                        <button className='button-cartlist'
                                             onClick={() => updateOrderStatus(order.id, "PROCESSING")}
                                         >
                                             Đang xử lý
                                         </button>
-                                        <button
+                                        <button className='button-cartlist'
                                             onClick={() => updateOrderStatus(order.id, "SHIPPED")}
                                         >
                                             Giao hàng
                                         </button>
-                                        <button
+                                        <button className='button-cartlist'
                                             onClick={() => updateOrderStatus(order.id, "DELIVERED")}
                                         >
                                             Đã Giao
                                         </button>
-                                        <button
+                                        <button className='button-cartlist'
                                             onClick={() => updateOrderStatus(order.id, "CANCELED")}
                                         >
                                             Hủy
