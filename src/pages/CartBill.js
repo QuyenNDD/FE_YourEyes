@@ -55,30 +55,41 @@ const CartBill = () => {
 
     const handlePlaceOrder = async () => {
         setPlacingOrder(true); // Bắt đầu xử lý
+    
         try {
-            const formData = new FormData();
-            formData.append("discountCode", selectedDiscount);
+            // Lấy mảng id của sản phẩm trong giỏ hàng
+            const cartItemIds = cartItems.map(item => item.id);
+    
+            // Tạo đối tượng dữ liệu cần gửi
+            const orderData = {
+                discountCode: selectedDiscount, // Mã giảm giá đã chọn
+                cartItemIds: cartItemIds // Mảng id sản phẩm
+            };
+            // Gửi yêu cầu POST dưới dạng JSON
             const response = await fetch("http://localhost:8080/api/order/place", {
                 method: "POST",
                 headers: {
+                    "Content-Type": "application/json", // Xác định là gửi dữ liệu JSON
                     Authorization: `Bearer ${localStorage.getItem("token")}`,
                 },
-                body: formData,
+                body: JSON.stringify(orderData), // Chuyển đối tượng thành JSON
             });
-
+    
             if (!response.ok) {
                 throw new Error("Lỗi khi đặt hàng. Vui lòng thử lại.");
             }
-
+    
             const data = await response.json();
             alert("Đơn hàng đã được đặt thành công!");
-            navigate("/Cart", { state: { order: data } }); // Điều hướng đến trang xác nhận
+            navigate("/Cart", { state: { order: data } }); // Điều hướng đến trang xác nhận đơn hàng
         } catch (err) {
             alert(err.message || "Đã xảy ra lỗi. Vui lòng thử lại.");
         } finally {
             setPlacingOrder(false); // Kết thúc xử lý
         }
     };
+    
+
 
     if (loading) {
         return <p>Đang tải danh sách mã giảm giá...</p>;

@@ -132,30 +132,12 @@ const Profile = () => {
                 className="form-input"
               />
             </div>
-
-            {/* <div className="form-group">
-              <label className="form-label">Giới tính</label>
-              <div className="gender-options">
-                <label>
-                  <input type="radio" name="gender" value="Nam" /> Nam
-                </label>
-                <label>
-                  <input type="radio" name="gender" value="Nữ" /> Nữ
-                </label>
-                <label>
-                  <input type="radio" name="gender" value="Khác" /> Khác
-                </label>
-              </div>
-            </div> */}
           </div>
 
           <div className="profile-form-right">
             <div className="avatar-container">
               <li style={{fontSize:"100px"}}><i class="fa-regular fa-user"></i></li>
-              <button className="btn-upload">Chọn Ảnh</button>
-              <p className="upload-helper">
-                Dung lượng file tối đa 1 MB. Định dạng: JPEG, PNG.
-              </p>
+              <button className="btn-upload">Profile</button>
             </div>
           </div>
         </div>

@@ -3,20 +3,11 @@ import axios from "axios";
 
 const OrderHistory = () => {
   const [orderHistory, setOrderHistory] = useState([]);
+  const [selectedStatus, setSelectedStatus] = useState("ALL");
   const [selectedOrderDetails, setSelectedOrderDetails] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [showPriceDetails, setShowPriceDetails] = useState(false);
-
-  console.log(orderHistory);
-  console.log(selectedOrderDetails)
-
-
-  const togglePriceDetails = () => {
-    setShowPriceDetails(!showPriceDetails);
-  };
-
 
   useEffect(() => {
     const fetchOrderHistory = async () => {
@@ -48,7 +39,6 @@ const OrderHistory = () => {
         headers: { Authorization: `Bearer ${token}` },
       });
 
-
       setSelectedOrderDetails(response.data);
       setIsModalOpen(true); // Mở modal
     } catch (err) {
@@ -61,19 +51,39 @@ const OrderHistory = () => {
     setSelectedOrderDetails(null);
   };
 
+  const filterOrders = () =>
+    selectedStatus === "ALL"
+      ? orderHistory
+      : orderHistory.filter((order) => order.status === selectedStatus);
+
   if (loading) return <div>Đang tải dữ liệu...</div>;
   if (error) return <div className="error">{error}</div>;
 
   return (
     <section className="OrderHistory-pages">
       <div className="containerr">
-        <div className="cart-header">
+        {/* Thanh danh mục trạng thái */}
+        <div>
           <h2 style={{ fontWeight: "bold" }}>Lịch sử mua hàng</h2>
         </div>
+
+        <div className="status-bar">
+          {["ALL", "PENDING", "PROCESSING", "DELIVERED", "CANCELLED"].map((status) => (
+            <button
+              key={status}
+              className={`status-button ${selectedStatus === status ? "active" : ""}`}
+              onClick={() => setSelectedStatus(status)}
+            >
+              {status === "ALL" ? "Tất cả" : status}
+            </button>
+          ))}
+        </div>
+
+        {/* Danh sách đơn hàng */}
         <div className="order-history-list">
-          {orderHistory.length > 0 ? (
+          {filterOrders().length > 0 ? (
             <ul>
-              {orderHistory.map((order) => (
+              {filterOrders().map((order) => (
                 <li key={order.orderId} className="order-item">
                   <div className="order-info">
                     <p>
@@ -96,12 +106,12 @@ const OrderHistory = () => {
               ))}
             </ul>
           ) : (
-            <p>Bạn chưa có đơn hàng nào.</p>
+            <p>Không có đơn hàng nào ở trạng thái này.</p>
           )}
         </div>
       </div>
 
-      {/* Modal */}
+      {/* Modal chi tiết đơn hàng */}
       {isModalOpen && selectedOrderDetails && (
         <div className="modal-overlay" onClick={closeModal}>
           <div
@@ -119,34 +129,8 @@ const OrderHistory = () => {
               <strong>Trạng thái:</strong> {selectedOrderDetails.status}
             </p>
             <p>
-              <strong>Tổng tiền thanh toán:</strong> {selectedOrderDetails?.finalPrice?.toLocaleString()} VNĐ
-              <button
-                className="toggle-details-button"
-                onClick={togglePriceDetails}
-                style={{
-                  marginLeft: "10px",
-                  background: "transparent",
-                  border: "none",
-                  cursor: "pointer",
-                }}
-              >
-                {showPriceDetails ? "▲" : "▼"}
-              </button>
+              <strong>Tổng tiền thanh toán:</strong> {selectedOrderDetails.finalPrice.toLocaleString()} VNĐ
             </p>
-            {showPriceDetails && (
-              <>
-                <p>
-                  <strong>Tổng tiền:</strong> {selectedOrderDetails?.totalPrice?.toLocaleString()} VNĐ
-                </p>
-                <p>
-                  <strong>Ưu đãi sau khi áp mã:</strong>{" "}
-                  {selectedOrderDetails?.totalPrice - selectedOrderDetails?.finalPrice === 0
-                    ? "Chưa áp dụng"
-                    : `- ${(selectedOrderDetails?.totalPrice - selectedOrderDetails?.finalPrice).toLocaleString()} VNĐ`}
-                </p>
-              </>
-            )}
-
             <h4>Sản phẩm trong đơn hàng:</h4>
             <ul>
               {selectedOrderDetails.products.map((product) => (
@@ -154,7 +138,6 @@ const OrderHistory = () => {
                   <p>
                     <strong>Tên sản phẩm:</strong> {product.productName}
                   </p>
-                  <img src={product.imageUrl} alt="" style={{width:"60px"}}/>
                   <p>
                     <strong>Số lượng:</strong> {product.quantity}
                   </p>

@@ -624,6 +624,18 @@ li{
 .cart-infor {
   margin: 20px 0px;
 }
+.select-all-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+  gap: 10px;
+  padding: 10px 0;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.select-all-container input[type="checkbox"] {
+  accent-color: #007BFF;
+}
 /* --------------------------------Product-item-cart------------------------------------------ */
 
 .product-cart-1-content-product-item-text{
@@ -797,22 +809,7 @@ article {
   background-color: #444;
 }
 
-/* ---------------------------------------OrderHistory---------------------- */
-.order-history-list {
-  padding: 20px 0px;
-}
-.order-item{
-  background-color: #b0aeae;
-  border: 1px solid #000;
-  margin: 10px 0px;
-}
-.order-details {
-  background-color: #d5e3d1;
-}
-.horizontal-line {
-  border-top: 1px solid #333;
-  margin: 0.5rem 0;
-}
+
 /* --------------------------------------RevenueAnalytics------------------------- */
 .Chart-Revenu {
   background-color: #ffffff;
@@ -1012,7 +1009,46 @@ td.buttons {
   align-items: center;
   z-index: 1000;
 }
+.horizontal-line {
+  border-top: 1px solid #333;
+  margin: 0.5rem 0;
+}
 /* ------------------------------------------------------------------OrderHistory-------------------------------------------- */
+
+.order-history-list {
+  padding: 20px 0px;
+}
+.order-item{
+  background-color: #b0aeae;
+  border: 1px solid #000;
+  margin: 10px 0px;
+}
+.order-details {
+  background-color: #d5e3d1;
+}
+.status-bar {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+  padding: 10px;
+  border-bottom: 1px solid #eaeaea;
+  top: 0;
+  z-index: 10;
+}
+
+.status-button {
+  padding: 8px 20px;
+  font-size: 1rem;
+  color: #333;
+  background-color: #f5f5f5;
+  border: 1px solid #ddd;
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+
 .modal-content {
   background:linear-gradient(145deg, #ffffff, #f0f0f0);;
   padding: 20px;

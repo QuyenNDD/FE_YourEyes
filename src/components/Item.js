@@ -119,52 +119,63 @@ const ProductDetail = () => {
 
     const handlePlace = async () => {
         const token = localStorage.getItem('token');
-
+    
         if (!token) {
             alert("Bạn cần đăng nhập để thực hiện đặt hàng!");
             return;
         }
-
+    
         try {
-            // Thêm sản phẩm vào giỏ hàng
-            const response = await fetch('http://localhost:8080/api/cart/add', {
+            // 1. Thêm sản phẩm vào giỏ hàng
+            const addToCartRes = await fetch('http://localhost:8080/api/cart/add', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${token}`,
                 },
                 body: JSON.stringify({
-                    productId: id, // ID sản phẩm
-                    quantity: quantity, // Số lượng sản phẩm
+                    productId: id,
+                    quantity: quantity,
                 }),
             });
-
-            if (!response.ok) {
-                const errorData = await response.json();
+    
+            if (!addToCartRes.ok) {
+                const errorData = await addToCartRes.json();
                 throw new Error(errorData.message || "Không thể thêm sản phẩm vào giỏ hàng.");
             }
-
-            // Điều hướng đến CartBill với tổng tiền
-            navigate("/CartBill", {  state: {
-                cartItems: [
-                    {
-                        product: {
-                            id: product.id,
-                            name: product.name,
-                            price: product.price,
-                            imageUrl: product.imageUrl,
-                        },
-                        quantity: quantity,
-                    },
-                ],
-                totalprice: product.price * quantity,
-            },
-        });
+    
+            // 2. Lấy toàn bộ giỏ hàng để lấy cartItem theo product ID
+            const cartRes = await fetch('http://localhost:8080/api/cart', {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+    
+            const cartData = await cartRes.json();
+    
+            const selectedItem = cartData.cart.find(item => item.product.id.toString() === id);
+    
+            if (!selectedItem) {
+                throw new Error("Không tìm thấy sản phẩm vừa thêm trong giỏ hàng.");
+            }
+    
+            // 3. Tính tổng tiền
+            const total = selectedItem.product.price * selectedItem.quantity;
+    
+            // 4. Điều hướng đến CartBill
+            navigate("/CartBill", {
+                state: {
+                    cartItems: [selectedItem],
+                    totalprice: total,
+                },
+            });
+    
         } catch (err) {
-            console.error("Lỗi khi thêm sản phẩm vào giỏ hàng:", err);
+            console.error("Lỗi khi xử lý đặt hàng:", err);
             alert(err.message || "Có lỗi xảy ra. Vui lòng thử lại.");
         }
     };
+    
 
 
     const handleSubmit = async (e) => {
