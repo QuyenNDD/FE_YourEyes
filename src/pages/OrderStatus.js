@@ -11,8 +11,7 @@ const OrderStatus = () => {
 
     useEffect(() => {
         fetchOrders();
-    }, []); // Chỉ gọi một lần khi component được render
-
+    }, []); 
     const fetchOrders = async () => {
         try {
             const response = await axios.get("http://localhost:8080/api/order/all", {
@@ -37,7 +36,7 @@ const OrderStatus = () => {
                 {
                     params: { newStatus },
                     headers: {
-                        Authorization: `Bearer ${token}`, // Gửi token trong header
+                        Authorization: `Bearer ${token}`, 
                     },
                 }
             );
@@ -47,6 +46,7 @@ const OrderStatus = () => {
                     order.id === orderId ? { ...order, status: newStatus } : order
                 )
             );
+
             alert("Cập nhật trạng thái thành công!");
         } catch (err) {
             console.error("Lỗi khi cập nhật trạng thái đơn hàng:", err);
@@ -68,7 +68,6 @@ const OrderStatus = () => {
                     <table>
                         <thead>
                             <tr>
-                                <th>ID</th>
                                 <th>Khách hàng</th>
                                 <th>Email</th>
                                 <th>SDT</th>
@@ -76,13 +75,11 @@ const OrderStatus = () => {
                                 <th>Trạng thái</th>
                                 <th>Tổng tiền</th>
                                 <th>Ngày tạo</th>
-                                <th>Hành động</th>
                             </tr>
                         </thead>
                         <tbody>
                             {orders.map((order) => (
                                 <tr key={order.id}>
-                                    <td>{order.id}</td>
                                     <td>{order.user.fullname}</td>
                                     <td>{order.user.email}</td>
                                     <td>{order.user.phone}</td>
@@ -90,36 +87,20 @@ const OrderStatus = () => {
                                     <td>{order.status}</td>
                                     <td>{order.finalPrice.toLocaleString()} VND</td>
                                     <td>
-                                        {new Date(order.createdAt).toLocaleDateString()}{" "}
-                                        {new Date(order.createdAt).toLocaleTimeString()}
-                                    </td>
-                                    <td>
-                                        {/* Nút để cập nhật trạng thái */}
-                                        <button className='button-cartlist'
-                                            onClick={() => updateOrderStatus(order.id, "PENDING")}
-                                        >
-                                            Dang đặt hàng
-                                        </button>
-                                        <button className='button-cartlist'
-                                            onClick={() => updateOrderStatus(order.id, "PROCESSING")}
-                                        >
-                                            Đang xử lý
-                                        </button>
-                                        <button className='button-cartlist'
-                                            onClick={() => updateOrderStatus(order.id, "SHIPPED")}
-                                        >
-                                            Giao hàng
-                                        </button>
-                                        <button className='button-cartlist'
-                                            onClick={() => updateOrderStatus(order.id, "DELIVERED")}
-                                        >
-                                            Đã Giao
-                                        </button>
-                                        <button className='button-cartlist'
-                                            onClick={() => updateOrderStatus(order.id, "CANCELED")}
-                                        >
-                                            Hủy
-                                        </button>
+                                        {["PROCESSING", "PENDING", "SHIPPED", "DELIVERED", "CANCELLED"].map((status) => (
+                                            <button
+                                                key={status}
+                                                className={`button-cartlist ${status.toLowerCase()}`}
+                                                onClick={() => updateOrderStatus(order.id, status)}
+                                                disabled={order.status === status} // Vô hiệu hóa nút nếu trạng thái đã chọn
+                                            >
+                                                {status === "PROCESSING" && "Đang xử lý"}
+                                                {status === "PENDING" && "Đang đặt hàng"}
+                                                {status === "SHIPPED" && "Giao hàng"}
+                                                {status === "DELIVERED" && "Đã Giao"}
+                                                {status === "CANCELLED" && "Hủy"}
+                                            </button>
+                                        ))}
                                     </td>
                                 </tr>
                             ))}

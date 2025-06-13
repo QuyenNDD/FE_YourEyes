@@ -256,7 +256,7 @@ const ProductDetail = () => {
                                 <button className="btn btn-outline-primary" onClick={handleAddToCart}>Thêm vào giỏ hàng</button>
                             </div>
                             <div className="mt-2">
-                                <button className="btn btn-outline-primary" onClick={handlePlace}>Dặt hàng</button>
+                                <button className="btn btn-outline-primary" onClick={handlePlace}>Đặt hàng</button>
                             </div>
                         </div>
                         <div className="Item-content-description">

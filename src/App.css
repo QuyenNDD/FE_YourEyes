@@ -784,7 +784,7 @@ article {
 .product-name {
   font-size: 16px;
   font-weight: 500;
-  color: #333; /* Màu chữ (tuỳ chỉnh) */
+  color: #333; 
 }
 
 .Bill-Button {
@@ -820,9 +820,7 @@ article {
 }
 
 /* ---------------------------------------------ForgotPassword-------------------------------------------------- */
-/* .forgot-password__box{
-  margin: 15px;
-} */
+
  .forgot-password {
   max-width: 400px;
   margin: 0 auto;
@@ -867,7 +865,7 @@ article {
   padding: 20px;
 }
 
-/* Title and Subtitle */
+
 .profile-title {
   font-size: 20px;
   font-weight: bold;
@@ -981,8 +979,8 @@ article {
   text-align: center;
 }
 .button-cartlist{
-  display: inline-block; /* Đặt nút hiển thị dạng inline-block */
-  margin: 2px 4px; /* Tạo khoảng cách ngang giữa các nút */
+  display: inline-block; 
+  margin: 2px 4px;
   padding: 8px 12px;
   font-size: 14px;
   border: none;
@@ -1059,8 +1057,8 @@ td.buttons {
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
   position: relative;
   z-index: 1001;
-  max-height: 80vh; /* Giới hạn chiều cao modal là 80% chiều cao viewport */
-  overflow-y: auto; /* Kích hoạt cuộn dọc nếu nội dung vượt quá chiều cao */
+  max-height: 80vh; 
+  overflow-y: auto; 
 }
 
 .modal-close {
@@ -1083,4 +1081,9 @@ td.buttons {
 .toggle-details-button:hover {
   color: #007bff;
   transform: scale(1.1);
+}
+/* -----------------------------------------------------OrderStatus------------------------------------- */
+.button-cartlist:disabled {
+    opacity: 0.6; /* Làm mờ nút vô hiệu hóa */
+    background-color: #000;
 }
