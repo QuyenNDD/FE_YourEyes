@@ -45,33 +45,35 @@ const CartList = () => {
     };
 
     const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormData({ ...formData, [name]: value });
+        const { name, value, files } = e.target;
+        setFormData({
+            ...formData,
+            [name]: files ? files[0] : value, // Lấy file nếu là input type file
+        });
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        const payload = {
-            name: formData.name,
-            description: formData.description,
-            price: parseFloat(formData.price),
-            category: formData.category,
-            imageUrl: formData.image_url,
-        };
+        const formPayload = new FormData();
+        formPayload.append("name", formData.name);
+        formPayload.append("description", formData.description);
+        formPayload.append("price", formData.price);
+        formPayload.append("category", formData.category);
+        if (formData.image) formPayload.append("image", formData.image);
 
         try {
             const config = {
                 headers: {
                     Authorization: `Bearer ${token}`,
-                    'Content-Type': 'application/json',
+                    "Content-Type": "multipart/form-data",
                 },
             };
 
             if (isEditing) {
-                await axios.put(`http://localhost:8080/api/products/update/${formData.id}`, payload, config);
+                await axios.put(`http://localhost:8080/api/products/update/${formData.id}`, formPayload, config);
             } else {
-                await axios.post('http://localhost:8080/api/products/add', payload, config);
+                await axios.post("http://localhost:8080/api/products/add", formPayload, config);
             }
 
             fetchProducts(page);
@@ -137,7 +139,8 @@ const CartList = () => {
                             <option key={category.name} value={category.name}>{category.name}</option>
                         ))}
                     </select>
-                    <input type="text" name="image_url" placeholder="URL hình ảnh" value={formData.image_url} onChange={handleChange} required />
+                    {/* Thay thế URL hình ảnh bằng input file */}
+                    <input type="file" name="image" accept="image/*" onChange={handleChange} required={!isEditing} />
                     <button type="submit" className="login__button">{isEditing ? 'Cập nhật' : 'Thêm sản phẩm'}</button>
                     <button type="button" className="login__button" onClick={resetForm}>Hủy</button>
                 </form>
@@ -165,7 +168,7 @@ const CartList = () => {
                                     <td>{product.price}</td>
                                     <td>{product.categoryId?.name}</td>
                                     <td>{product.stock}</td>
-                                    <td><img src={product.imageUrl} alt={product.name} width="50" /></td>
+                                    <td><img src={`http://localhost:8080/${product.imageUrl}`} alt={product.name} width="50" /></td>
                                     <td>{new Date(product.createdAt).toLocaleDateString()}</td>
                                     <td className='buttons'>
                                         <button onClick={() => handleEdit(product)} className='button-cartlist'>Sửa</button>

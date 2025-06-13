@@ -230,7 +230,7 @@ const ProductDetail = () => {
                 <div className="Item-pages">
                     <div className="Item-pages-Img">
                         <div className="Item-img">
-                            <img src={product.imageUrl} alt={product.name} />
+                            <img src={`http://localhost:8080/${product.imageUrl}`} alt={product.name} />
                         </div>
                     </div>
                     <div className="Item-content">

@@ -7,7 +7,7 @@ const ProductSale = ({ imageUrl, name, price, onClick }) => {
   };
   return (
     <div className="slider-product-1-content-item" onClick={onClick}>
-      <img src={imageUrl} alt={name} />
+      <img src={`http://localhost:8080/${imageUrl}`} alt={name} />
       <div className="slider-product-1-content-items-text">
         <li>{name}</li>
         <li>{formatPrice(price)} VND</li>

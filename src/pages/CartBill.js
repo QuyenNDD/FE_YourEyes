@@ -124,7 +124,7 @@ const CartBill = () => {
                                 cartItems.map((item) => (
                                     <tr key={item.product.id} className="product-item">
                                         <td className="product-info">
-                                            <img src={item.product.imageUrl} alt={item.product.name} className="product-image" />
+                                            <img src={`http://localhost:8080/${item.product.imageUrl}`} alt={item.product.name} className="product-image" />
                                             <span className="product-name">{item.product.name}</span>
                                         </td>
                                         <td>{item.quantity}</td>

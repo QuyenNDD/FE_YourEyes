@@ -13,7 +13,7 @@ const Sanpham = () => {
     const pageSize = 10; // Số sản phẩm tải mỗi lần
     const categories = [
         { id: 1, name: 'Dior' },
-        { id: 2, name: 'Chopard' },
+        { id: 2, name: 'Gucci' },
         { id: 3, name: 'Cartier' },
     ];
 

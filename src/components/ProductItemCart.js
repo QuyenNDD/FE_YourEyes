@@ -15,7 +15,7 @@ const ProductItemCart = ({ imageUrl, name, price, onClick, onRemove, quantity, o
                 />
             </div>
             <div onClick={onClick}>
-                <img src={imageUrl} alt="#" />
+                <img src={`http://localhost:8080/${imageUrl}`} alt="#" />
                 <div className="product-cart-1-content-product-item-text">
                     <li>{name}</li>
                     <li>Số lượng: {quantity}</li>
