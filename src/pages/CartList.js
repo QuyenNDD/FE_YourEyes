@@ -139,7 +139,6 @@ const CartList = () => {
                             <option key={category.name} value={category.name}>{category.name}</option>
                         ))}
                     </select>
-                    {/* Thay thế URL hình ảnh bằng input file */}
                     <input type="file" name="image" accept="image/*" onChange={handleChange} required={!isEditing} />
                     <button type="submit" className="login__button">{isEditing ? 'Cập nhật' : 'Thêm sản phẩm'}</button>
                     <button type="button" className="login__button" onClick={resetForm}>Hủy</button>

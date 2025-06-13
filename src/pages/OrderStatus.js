@@ -92,7 +92,7 @@ const OrderStatus = () => {
                                                 key={status}
                                                 className={`button-cartlist ${status.toLowerCase()}`}
                                                 onClick={() => updateOrderStatus(order.id, status)}
-                                                disabled={order.status === status} // Vô hiệu hóa nút nếu trạng thái đã chọn
+                                                disabled={order.status === status} 
                                             >
                                                 {status === "PROCESSING" && "Đang xử lý"}
                                                 {status === "PENDING" && "Đang đặt hàng"}

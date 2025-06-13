@@ -7,24 +7,35 @@ const Sanpham = () => {
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
     const [selectedCategory, setSelectedCategory] = useState(null);
+    const [selectedPriceRange, setSelectedPriceRange] = useState('');
     const [page, setPage] = useState(0);
     const [hasMore, setHasMore] = useState(true);
 
-    const pageSize = 10; // Số sản phẩm tải mỗi lần
+    const pageSize = 10;
     const categories = [
         { id: 1, name: 'Dior' },
         { id: 2, name: 'Gucci' },
         { id: 3, name: 'Cartier' },
     ];
+    const priceRanges = [
+        { label: 'Tất cả', min: null, max: null },
+        { label: 'Dưới 100k', min: 0, max: 100000 },
+        { label: '100k - 500k', min: 100000, max: 500000 },
+        { label: 'Trên 500k', min: 500000, max: null },
+    ];
 
-    const fetchProducts = async (pageNumber, category = null, reset = false) => {
+    const fetchProducts = async (pageNumber, category = null, priceRange = null, reset = false) => {
         setLoading(true);
         setError(null);
 
         try {
             const categoryFilter = category ? `&categoryId=${category}` : '';
+            const priceFilter =
+                priceRange && priceRange.min !== null
+                    ? `&minPrice=${priceRange.min}${priceRange.max !== null ? `&maxPrice=${priceRange.max}` : ''}`
+                    : '';
             const response = await fetch(
-                `http://localhost:8080/api/products/getAll?page=${pageNumber}&size=${pageSize}${categoryFilter}`
+                `http://localhost:8080/api/products/filter?page=${pageNumber}&size=${pageSize}${categoryFilter}${priceFilter}`
             );
 
             if (!response.ok) {
@@ -33,17 +44,12 @@ const Sanpham = () => {
 
             const data = await response.json();
 
-            if (Array.isArray(data.content)) {
-                const filteredProducts = category
-                    ? data.content.filter((product) => product.categoryId?.id === category)
-                    : data.content;
-
+            if (Array.isArray(data)) {
                 setProducts((prevProducts) =>
-                    reset ? filteredProducts : [...prevProducts, ...filteredProducts]
+                    reset ? data : [...prevProducts, ...data]
                 );
-
-                setHasMore(!data.last);
-                setProductCount(data.totalElements);
+                setHasMore(data.length === pageSize);
+                setProductCount(data.length);
             } else {
                 throw new Error('Dữ liệu không hợp lệ');
             }
@@ -54,30 +60,30 @@ const Sanpham = () => {
         }
     };
 
-
-
     useEffect(() => {
-        fetchProducts(0, selectedCategory, true); // Tải dữ liệu lần đầu
-    }, [selectedCategory]);
+        fetchProducts(0, selectedCategory, selectedPriceRange ? JSON.parse(selectedPriceRange) : null, true);
+    }, [selectedCategory, selectedPriceRange]);
 
     const handleCategoryChange = (categoryId) => {
         setSelectedCategory(categoryId);
-        setProducts([]); // Reset sản phẩm hiện tại
-        setPage(0); // Reset trang
-        fetchProducts(0, categoryId, true); // Gọi API với danh mục mới
+        setPage(0);
     };
 
+    const handlePriceRangeChange = (event) => {
+        setSelectedPriceRange(event.target.value);
+        setPage(0);
+    };
 
     const handleShowAllProducts = () => {
         setSelectedCategory(null);
-        setProducts([]);
+        setSelectedPriceRange('');
         setPage(0);
     };
 
     const loadMoreProducts = () => {
         const nextPage = page + 1;
         setPage(nextPage);
-        fetchProducts(nextPage, selectedCategory); // Tải thêm sản phẩm
+        fetchProducts(nextPage, selectedCategory, selectedPriceRange ? JSON.parse(selectedPriceRange) : null);
     };
 
     if (error) {
@@ -89,36 +95,34 @@ const Sanpham = () => {
             <div className="Product-cartergory">
                 <h2>Tất cả sản phẩm</h2>
                 <div className="product-button">
-                    <li>
-                        <button
-                            className={`btn btn-outline-secondary ${selectedCategory === null ? 'active' : ''}`}
-                            type="button"
-                            onClick={handleShowAllProducts}
-                        >
-                            Hiển Thị Tất Cả
-                        </button>
-                    </li>
+                    <button
+                        className={`btn btn-outline-secondary ${selectedCategory === null ? 'active' : ''}`}
+                        onClick={handleShowAllProducts}
+                    >
+                        Hiển Thị Tất Cả
+                    </button>
                     {categories.map((category) => (
-                        <li key={category.id}>
-                            <button
-                                className={`btn btn-outline-secondary ${selectedCategory === category.id ? 'active' : ''}`}
-                                type="button"
-                                onClick={() => handleCategoryChange(category.id)}
-                            >
-                                {category.name}
-                            </button>
-                        </li>
+                        <button
+                            key={category.id}
+                            className={`btn btn-outline-secondary ${selectedCategory === category.id ? 'active' : ''}`}
+                            onClick={() => handleCategoryChange(category.id)}
+                        >
+                            {category.name}
+                        </button>
                     ))}
                 </div>
-            </div>
-            <div className="Product-button">
-                <div className="cout-sanpham">
-                    <li>
-                        <span>(</span>
-                        <span id="product-count">{productCount}</span>
-                        <span> sản phẩm</span>
-                        <span>)</span>
-                    </li>
+                <div className="price-filter">
+                    <select
+                        value={selectedPriceRange}
+                        onChange={handlePriceRangeChange}
+                        className="form-select"
+                    >
+                        {priceRanges.map((range, index) => (
+                            <option key={index} value={JSON.stringify(range)}>
+                                {range.label}
+                            </option>
+                        ))}
+                    </select>
                 </div>
             </div>
             <ProductList products={products} />
