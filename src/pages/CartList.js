@@ -147,7 +147,6 @@ const CartList = () => {
                     <table>
                         <thead>
                             <tr>
-                                <th>ID</th>
                                 <th>Tên</th>
                                 <th>Mô tả</th>
                                 <th>Giá</th>
@@ -161,7 +160,6 @@ const CartList = () => {
                         <tbody>
                             {products.map(product => (
                                 <tr key={product.id}>
-                                    <td>{product.id}</td>
                                     <td>{product.name}</td>
                                     <td>{product.description}</td>
                                     <td>{product.price}</td>

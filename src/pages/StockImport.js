@@ -147,7 +147,6 @@ const StockImport = () => {
                     <table>
                         <thead>
                             <tr>
-                                <th>ID</th>
                                 <th>Tên</th>
                                 <th>Mô tả</th>
                                 <th>Giá</th>
@@ -159,7 +158,6 @@ const StockImport = () => {
                         <tbody>
                             {products.map(product => (
                                 <tr key={product.id}>
-                                    <td>{product.id}</td>
                                     <td>{product.name}</td>
                                     <td>{product.description}</td>
                                     <td>{product.price}</td>
@@ -181,15 +179,7 @@ const StockImport = () => {
                     ))}
                     <button onClick={() => handlePageChange(page + 1)} disabled={page === totalPages - 1}>›</button>
                     <button onClick={() => handlePageChange(totalPages - 1)} disabled={page === totalPages - 1}>»</button>
-                </div>
-
-                {/* Message Section */}
-                {message && (
-                    <p className="mt-4 text-green-600 font-medium">{message}</p>
-                )}
-                {error && (
-                    <p className="mt-4 text-red-600 font-medium">{error}</p>
-                )}
+                </div>            
             </article>
         </div>
     );

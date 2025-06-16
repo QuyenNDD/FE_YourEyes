@@ -3,12 +3,12 @@
 }
 
 body {
-  background-color: #f5f5f5; 
-    color: #333; 
-    font-family: 'Arial', sans-serif; 
-    margin: 0;
-    padding: 0;
-    line-height: 1.6;
+  background-color: #f5f5f5;
+  color: #333;
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  line-height: 1.6;
 }
 
 .login {
@@ -114,13 +114,15 @@ table {
 th,
 td {
   border: 1px solid #545252 !important;
-  /* Border cho các ô */
   padding: 2px 0px;
-  text-align: center;
+  text-align: center !important;
+  vertical-align: middle !important; 
 }
 
 th {
   background-color: #f2f2f2;
+  text-align: center;
+  vertical-align: middle; 
 }
 
 .load-more-container {
@@ -858,6 +860,7 @@ li {
 .price-filter button:hover {
   background-color: #f0f0f0;
 }
+
 /* -------------------------- Danh sách sản phẩm -------------------------- */
 .product-list {
   display: grid;
@@ -919,21 +922,22 @@ li {
 .load-more-button:hover {
   background-color: #0056b3;
 }
+
 .form-select {
-    width: 100%;
-    padding: 8px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    font-size: 14px;
-    background-color: #fff;
-    cursor: pointer;
-    transition: border-color 0.3s ease;
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  font-size: 14px;
+  background-color: #fff;
+  cursor: pointer;
+  transition: border-color 0.3s ease;
 }
 
 .form-select:hover,
 .form-select:focus {
-    border-color: #007bff;
-    outline: none;
+  border-color: #007bff;
+  outline: none;
 }
 
 /* ---------------------------------------PAGES-ADMIN-------------------------------------------- */
@@ -1307,9 +1311,6 @@ td.buttons {
   margin: 10px 0px;
 }
 
-.order-details {
-  background-color: #d5e3d1;
-}
 
 .status-bar {
   display: flex;
@@ -1371,6 +1372,41 @@ td.buttons {
   transform: scale(1.1);
 }
 
+.order-item {
+  position: relative;
+  border: 1px solid #ddd;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 8px;
+}
+
+.order-status {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  padding: 5px 10px;
+  border-radius: 4px;
+  color: #f64343;
+}
+
+.order-info {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.product-image img {
+  border-radius: 8px;
+}
+
+.view-more {
+  margin-top: 5px;
+  background: none;
+  border: 1px solid #555;
+  padding: 3px 5px;
+  cursor: pointer;
+}
+
 /* -----------------------------------------------------OrderStatus------------------------------------- */
 .button-cartlist:disabled {
   opacity: 0.6;
@@ -1388,27 +1424,42 @@ form label {
 
 
 nav ul.navigation li a.active {
-    color: #b69c34; /* Đổi màu chữ */
-    transition: all 0.3s ease-in-out; /* Hiệu ứng chuyển mượt */
+  color: #b69c34;
+  /* Đổi màu chữ */
+  transition: all 0.3s ease-in-out;
+  /* Hiệu ứng chuyển mượt */
 }
 
 .pagination {
-    display: flex;
-    justify-content: center;
-    gap: 5px;
+  display: flex;
+  justify-content: center;
+  gap: 5px;
 }
 
 .pagination button {
-    padding: 5px 10px;
-    border: 1px solid #ddd;
-    border-radius: 3px;
-    background-color: #f2f2f2;
-    cursor: pointer;
-    transition: background-color 0.3s;
+  padding: 5px 10px;
+  border: 1px solid #ddd;
+  border-radius: 3px;
+  background-color: #f2f2f2;
+  cursor: pointer;
+  transition: background-color 0.3s;
 }
 
 .pagination button.active,
 .pagination button:hover {
-    background-color: #007BFF;
-    color: white;
+  background-color: #007BFF;
+  color: white;
+}
+
+/* General button styles */
+.button-css {
+  padding: 0.25rem 0.5rem;
+  border-radius: 0.25rem;
+  background-color: #28a745;
+  color: #ffffff;
+  text-align: center;
+  display: inline-block;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  margin-right: 10px;
 }

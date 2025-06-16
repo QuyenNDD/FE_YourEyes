@@ -51,7 +51,6 @@ const UserList = () => {
                     <table>
                         <thead>
                             <tr>
-                                <th>ID</th>
                                 <th>Họ và Tên</th>
                                 <th>Email</th>
                                 <th>Số điện thoại</th>
@@ -61,7 +60,6 @@ const UserList = () => {
                         <tbody>
                             {users.map(user => (
                                 <tr key={user.id}>
-                                    <td>{user.id}</td>
                                     <td>{user.fullname}</td>
                                     <td>{user.email}</td>
                                     <td>{user.phone}</td>

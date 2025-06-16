@@ -7,100 +7,138 @@ const OrderStatus = () => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
 
-    const token = localStorage.getItem("token"); // Lấy token từ localStorage
+    const token = localStorage.getItem("token");
 
     useEffect(() => {
         fetchOrders();
-    }, []); 
+    }, []);
+
     const fetchOrders = async () => {
+        setLoading(true);
         try {
             const response = await axios.get("http://localhost:8080/api/order/all", {
                 headers: {
-                    Authorization: `Bearer ${token}`, // Gửi token trong header
+                    Authorization: `Bearer ${token}`,
                 },
             });
-            setOrders(response.data); // Gán dữ liệu đơn hàng từ API
-            setLoading(false); // Tắt trạng thái loading
+            setOrders(response.data);
         } catch (err) {
-            console.error("Lỗi khi lấy danh sách order:", err);
-            setError(err); // Gán lỗi để hiển thị
-            setLoading(false); // Tắt trạng thái loading
+            setError(err.response?.data?.message || "Có lỗi xảy ra khi tải đơn hàng.");
+        } finally {
+            setLoading(false);
         }
     };
 
     const updateOrderStatus = async (orderId, newStatus) => {
         try {
-            const response = await axios.put(
+            await axios.put(
                 `http://localhost:8080/api/order/${orderId}/status`,
                 null,
                 {
                     params: { newStatus },
                     headers: {
-                        Authorization: `Bearer ${token}`, 
+                        Authorization: `Bearer ${token}`,
                     },
                 }
             );
-            // Cập nhật danh sách đơn hàng sau khi thay đổi
             setOrders((prevOrders) =>
                 prevOrders.map((order) =>
                     order.id === orderId ? { ...order, status: newStatus } : order
                 )
             );
-
             alert("Cập nhật trạng thái thành công!");
         } catch (err) {
-            console.error("Lỗi khi cập nhật trạng thái đơn hàng:", err);
-            alert("Cập nhật trạng thái thất bại.");
+            alert("Cập nhật trạng thái thất bại: " + (err.response?.data?.message || "Lỗi không xác định."));
         }
     };
 
-    if (loading) return <p>Loading...</p>;
-    if (error) return <p>Error: {error.message}</p>;
+    if (loading) return <p>Đang tải danh sách đơn hàng...</p>;
+    if (error) return <p className="error">Lỗi: {error}</p>;
 
     return (
         <div>
             <MenuBar />
             <article>
-                <h2>DANH SÁCH ĐƠN HÀNG</h2>
+                <h2 className="text-lg font-bold mb-4">Danh sách đơn hàng</h2>
                 {orders.length === 0 ? (
                     <p>Không có đơn hàng nào.</p>
                 ) : (
-                    <table>
+                    <table className="table-auto w-full border-collapse border border-gray-300">
                         <thead>
-                            <tr>
-                                <th>Khách hàng</th>
-                                <th>Email</th>
-                                <th>SDT</th>
-                                <th>Địa chỉ</th>
-                                <th>Trạng thái</th>
-                                <th>Tổng tiền</th>
-                                <th>Ngày tạo</th>
+                            <tr className="bg-gray-200">
+                                <th className="border border-gray-300 px-4 py-2">Khách hàng</th>
+                                <th className="border border-gray-300 px-4 py-2">Email</th>
+                                <th className="border border-gray-300 px-4 py-2">SDT</th>
+                                <th className="border border-gray-300 px-4 py-2">Địa chỉ</th>
+                                <th className="border border-gray-300 px-4 py-2">Trạng thái</th>
+                                <th className="border border-gray-300 px-4 py-2">Tổng tiền</th>
+                                <th className="border border-gray-300 px-4 py-2">Thay đổi trạng thái</th>
                             </tr>
                         </thead>
                         <tbody>
                             {orders.map((order) => (
-                                <tr key={order.id}>
-                                    <td>{order.user.fullname}</td>
-                                    <td>{order.user.email}</td>
-                                    <td>{order.user.phone}</td>
-                                    <td>{order.user.address}</td>
-                                    <td>{order.status}</td>
-                                    <td>{order.finalPrice.toLocaleString()} VND</td>
-                                    <td>
-                                        {["PROCESSING", "PENDING", "SHIPPED", "DELIVERED", "CANCELLED"].map((status) => (
-                                            <button
-                                                key={status}
-                                                className={`button-cartlist ${status.toLowerCase()}`}
-                                                onClick={() => updateOrderStatus(order.id, status)}
-                                                disabled={order.status === status} 
-                                            >
-                                                {status === "PROCESSING" && "Đang xử lý"}
-                                                {status === "PENDING" && "Đang đặt hàng"}
-                                                {status === "SHIPPED" && "Giao hàng"}
-                                                {status === "DELIVERED" && "Đã Giao"}
-                                                {status === "CANCELLED" && "Hủy"}
-                                            </button>
-                                        ))}
+                                <tr key={order.id} className="hover:bg-gray-100">
+                                    <td className="border border-gray-300 px-4 py-2">{order.user.fullname}</td>
+                                    <td className="border border-gray-300 px-4 py-2">{order.user.email}</td>
+                                    <td className="border border-gray-300 px-4 py-2">{order.user.phone}</td>
+                                    <td className="border border-gray-300 px-4 py-2">{order.user.address}</td>
+                                    <td className="border border-gray-300 px-4 py-2">{order.status}</td>
+                                    <td className="border border-gray-300 px-4 py-2">{order.finalPrice.toLocaleString()} VND</td>
+                                    <td className="border border-gray-300 px-4 py-2">
+                                        {order.status === "PENDING" && (
+                                            <>
+                                                <button
+                                                    className="button-css"
+                                                    onClick={() => updateOrderStatus(order.id, "CONFIRMED")}
+                                                >
+                                                    Xác nhận
+                                                </button>
+                                                <button
+                                                    className="button-css"
+                                                    onClick={() => updateOrderStatus(order.id, "CANCELED")}
+                                                >
+                                                    Hủy
+                                                </button>
+                                            </>
+                                        )}
+                                        {order.status === "CONFIRMED" && (
+                                            <>
+                                                <button
+                                                    className="button-css"
+                                                    onClick={() => updateOrderStatus(order.id, "SHIPPING")}
+                                                >
+                                                    Giao hàng
+                                                </button>
+                                                <button
+                                                    className="button-css"
+                                                    onClick={() => updateOrderStatus(order.id, "CANCELED")}
+                                                >
+                                                    Hủy
+                                                </button>
+                                            </>
+                                        )}
+                                        {order.status === "SHIPPING" && (
+                                            <>
+                                                <button
+                                                    className="button-css"
+                                                    onClick={() => updateOrderStatus(order.id, "COMPLETED")}
+                                                >
+                                                    Giao hàng hoàn tất
+                                                </button>
+                                                <button
+                                                    className="button-css"
+                                                    onClick={() => updateOrderStatus(order.id, "RETURNED")}
+                                                >
+                                                    Hoàn trả
+                                                </button>
+                                                <button
+                                                    className="button-css"
+                                                    onClick={() => updateOrderStatus(order.id, "CANCELED")}
+                                                >
+                                                    Hủy
+                                                </button>
+                                            </>
+                                        )}
                                     </td>
                                 </tr>
                             ))}

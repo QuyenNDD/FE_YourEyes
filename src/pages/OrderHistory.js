@@ -18,7 +18,7 @@ const OrderHistory = () => {
         const response = await axios.get("http://localhost:8080/api/order/history", {
           headers: { Authorization: `Bearer ${token}` },
         });
-
+        console.log(response.data)
         setOrderHistory(response.data);
       } catch (err) {
         setError(
@@ -40,7 +40,7 @@ const OrderHistory = () => {
       });
 
       setSelectedOrderDetails(response.data);
-      setIsModalOpen(true); // Mở modal
+      setIsModalOpen(true);
     } catch (err) {
       setError("Không thể tải chi tiết đơn hàng. Vui lòng thử lại sau!");
     }
@@ -59,48 +59,70 @@ const OrderHistory = () => {
   if (loading) return <div>Đang tải dữ liệu...</div>;
   if (error) return <div className="error">{error}</div>;
 
+  const statusMap = {
+    ALL: "Tất cả",
+    PENDING: "Chờ xử lý",
+    CONFIRMED: "Đang xử lý",
+    SHIPPING: "Đang giao hàng",
+    COMPLETED: "Đã hoàn thành",
+    RETURNED: "Đã hoàn lại",
+    CANCELED: "Đã hủy",
+  };
+
   return (
     <section className="OrderHistory-pages">
       <div className="containerr">
-        {/* Thanh danh mục trạng thái */}
         <div>
           <h2 style={{ fontWeight: "bold" }}>Lịch sử mua hàng</h2>
         </div>
 
         <div className="status-bar">
-          {["ALL", "PENDING", "PROCESSING", "DELIVERED", "CANCELLED"].map((status) => (
+          {Object.keys(statusMap).map((status) => (
             <button
               key={status}
               className={`status-button ${selectedStatus === status ? "active" : ""}`}
               onClick={() => setSelectedStatus(status)}
             >
-              {status === "ALL" ? "Tất cả" : status}
+              {statusMap[status]}
             </button>
           ))}
         </div>
 
-        {/* Danh sách đơn hàng */}
         <div className="order-history-list">
           {filterOrders().length > 0 ? (
             <ul>
               {filterOrders().map((order) => (
-                <li key={order.orderId} className="order-item">
+                <li
+                  key={order.orderId}
+                  className="order-item"
+                  onClick={() => fetchOrderDetails(order.orderId)}
+                >
+                  {/* Góc phải phía trên trạng thái */}
+                  <div className="order-status">
+                    <span>{statusMap[order.status]}</span>
+                  </div>
                   <div className="order-info">
-                    <p>
-                      <strong>Mã đơn hàng:</strong> {order.orderId}
-                    </p>
-                    <p>
-                      <strong>Trạng thái:</strong> {order.status}
-                    </p>
-                    <p>
-                      <strong>Tổng tiền thanh toán:</strong> {order.finalPrice.toLocaleString()} VNĐ
-                    </p>
-                    <button
-                      className="btn btn-dark"
-                      onClick={() => fetchOrderDetails(order.orderId)}
-                    >
-                      Xem chi tiết
-                    </button>
+                    {/* Hiển thị ảnh sản phẩm
+                    <div className="product-image">
+                      <img
+                        src={`http://localhost:8080/${order.products.imageUrl}`}
+                        alt="Product"
+                        style={{ width: "100px", height: "100px", objectFit: "cover" }}
+                      />
+                    </div> */}
+
+                    {/* Thông tin đơn hàng */}
+                    <div className="order-details">
+                      <p>
+                        <strong>Mã đơn hàng:</strong> {order.orderId}
+                      </p>
+                      <p>
+                        <strong>Trạng thái:</strong> {order.status}
+                      </p>
+                      <p>
+                        <strong>Tổng tiền thanh toán:</strong> {order.finalPrice.toLocaleString()} VNĐ
+                      </p>
+                    </div>
                   </div>
                 </li>
               ))}
@@ -111,13 +133,9 @@ const OrderHistory = () => {
         </div>
       </div>
 
-      {/* Modal chi tiết đơn hàng */}
       {isModalOpen && selectedOrderDetails && (
         <div className="modal-overlay" onClick={closeModal}>
-          <div
-            className="modal-content"
-            onClick={(e) => e.stopPropagation()} // Ngăn việc đóng modal khi click vào nội dung
-          >
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <button className="modal-close" onClick={closeModal}>
               ×
             </button>
@@ -126,15 +144,22 @@ const OrderHistory = () => {
               <strong>Mã đơn hàng:</strong> {selectedOrderDetails.orderId}
             </p>
             <p>
-              <strong>Trạng thái:</strong> {selectedOrderDetails.status}
+              <strong>Trạng thái:</strong> {statusMap[selectedOrderDetails.status]}
             </p>
             <p>
               <strong>Tổng tiền thanh toán:</strong> {selectedOrderDetails.finalPrice.toLocaleString()} VNĐ
             </p>
             <h4>Sản phẩm trong đơn hàng:</h4>
             <ul>
-              {selectedOrderDetails.products.map((product) => (
+              {selectedOrderDetails.products?.map((product) => (
                 <li key={product.productId}>
+                  <p>
+                    <img
+                      src={`http://localhost:8080/${product.imageUrl}`}
+                      alt="Product"
+                      style={{ width: "100px", height: "100px", objectFit: "cover" }}
+                    />
+                  </p>
                   <p>
                     <strong>Tên sản phẩm:</strong> {product.productName}
                   </p>
