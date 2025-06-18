@@ -139,6 +139,17 @@ const OrderStatus = () => {
                                                 </button>
                                             </>
                                         )}
+                                        <>
+                                            {order.status === "RETURNED" && (
+                                                <span className="status-returned">Hoàn trả</span>
+                                            )}
+                                            {order.status === "COMPLETED" && (
+                                                <span className="status-completed">Đã giao hàng thành công</span>
+                                            )}
+                                            {order.status === "CANCELED" && (
+                                                <span className="status-canceled">Đơn hàng đã hủy</span>
+                                            )}
+                                        </>
                                     </td>
                                 </tr>
                             ))}

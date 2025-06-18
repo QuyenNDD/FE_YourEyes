@@ -1463,3 +1463,16 @@ nav ul.navigation li a.active {
   transition: background-color 0.3s ease;
   margin-right: 10px;
 }
+
+.status-returned {
+    color: red; /* Màu đỏ cho trạng thái RETURNED */
+    font-weight: bold;
+}
+.status-completed {
+    color: rgb(87, 128, 0); /* Màu xanh cho trạng thái COMPLETED */
+    font-weight: bold;
+}
+.status-canceled {
+    color: gray; /* Màu xám cho trạng thái CANCELED */
+    font-weight: bold;
+}
